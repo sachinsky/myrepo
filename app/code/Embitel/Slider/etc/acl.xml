@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Embitel_Adminhtml::admin">
+                <resource id="Embitel_Slider::slider" title="Slider" sortOrder="40">
+                    <resource id="Embitel_Slider::manage" title="Slider Module" sortOrder="10">
+						<resource id="Embitel_Slider::save" title="Save Slider" sortOrder="10" />
+                        <resource id="Embitel_Slider::news_delete" title="Delete Slider" sortOrder="20" />
+					</resource>
+                </resource>
+                <resource id="Embitel_Adminhtml::stores">
+                    <resource id="Embitel_Adminhtml::stores_settings">
+                        <resource id="Embitel_Adminhtml::config">
+                            <resource id="Embitel_Slider::config_slider" title="Slider Section" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

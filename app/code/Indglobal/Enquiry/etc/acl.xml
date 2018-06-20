@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Indglobal_Adminhtml::admin">
+                <resource id="Indglobal_Enquiry::enquiry" title="Enquiry" sortOrder="40">
+                    <resource id="Indglobal_Enquiry::manage" title="Enquiry Module" sortOrder="10">
+						<resource id="Indglobal_Enquiry::save" title="Save Enquiry" sortOrder="10" />
+                        <resource id="Indglobal_Enquiry::news_delete" title="Delete Enquiry" sortOrder="20" />
+					</resource>
+                </resource>
+                <resource id="Indglobal_Adminhtml::stores">
+                    <resource id="Indglobal_Adminhtml::stores_settings">
+                        <resource id="Indglobal_Adminhtml::config">
+                            <resource id="Indglobal_Enquiry::config_enquiry" title="Enquiry Section" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,594 @@
+<?php
+$comparecount = $this->helper('Magento\Catalog\Helper\Product\Compare')->getItemCollection()->count();
+$p=0;
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->create('Magento\Customer\Model\Session');
+if ($customerSession->isLoggedIn()) {
+$p=1;
+}
+?>
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();        
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getViewFileUrl('css/tooltipster.bundle.min.css') ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getViewFileUrl('css/jquery-confirm.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getViewFileUrl('css/meanmenu.css') ?>">
+<div class="box follow-scroll"><a href="<?php echo $block->getUrl('catalog/product_compare/index/'); ?>"><span class="wish-number"><?php echo $comparecount?></span><img class="img" src="<?php echo $this->getViewFileUrl('images/floating-Icon.png') ?>" /></a></div> 
+
+<div class="header-container header-style-1">
+	<!--header top start-->
+    <div class="header-news">
+    	<div class="container">
+			<div class="row">
+            	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            		<div id="halal-news">
+                    	<div class="TickerNews" id="T1">
+                            <div class="ti_wrapper">
+                                <div class="ti_slide">
+                                    <div class="ti_content">
+                                        <div class="ti_news"><a href="#">Welcome to HALAL GLOBAL HUB!</a></div>
+                                        <div class="ti_news"><a href="#">A trusted online marketplace for B2C, Wholesale and B2B.</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+		</div>
+    </div>
+    <div class="header-top">
+		<div class="container">
+			<div class="row">
+            	
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                	
+                	<ul class="top-nav-ul">
+                		<li class="drop-block drop-block"><a href="javascript:void(0)">About us<span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+						<ul>
+							<li><a href="<?php echo $block->getUrl('about-us')?>">Halal Global Hub</a></li>
+							<li><a href="<?php echo $block->getUrl('shop-with-us')?>">Why shop with us?</a></li>
+							<li><a href="<?php echo $block->getUrl('sell-with-us')?>">Why sell with us?</a></li>
+							<li><a href="<?php echo $block->getUrl('why-halal-product')?>">WHY Halal Products?</a></li>
+						</ul>
+					</li>
+                    	<li class="track-block"><a href="<?php echo $block->getUrl('trackorder')?>"><i class="fa fa-map-marker" aria-hidden="true"></i> Track Order</a></li>
+                    	 <?php if($store_id==2){?>
+                        
+                        <li class="wholesale-block"><a href="<?php echo "http://halalglobalhub.com/"?>">CLICK TO Retail</a></li>
+                        <?php }else if($store_id!=2){?>
+                        <li class="wholesale-block"><a href="<?php echo "http://halalglobalhub.com/wholeseller"?>">CLICK TO WHOLESALE</a></li>
+                        <?php }?>
+                    	<?php $login_customer =  $block->getLayout()->createBlock('Magento\Customer\Block\Account\Customer');?>
+                    	<?php
+                    	$p1=0;
+                    	 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                         $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+        				 $customerSession = $objectManager->get('Magento\Customer\Model\Session');
+                        if($customerSession->isLoggedIn()) {
+       						  $result1 = $connection->fetchAll("SELECT * FROM marketplace_userdata where seller_id='".$customerSession->getCustomer()->getId()."'");
+       						  if(empty($result1)){
+       						  	$p1 = 0;
+       						  }else{
+       						  	$p1 = 1;
+       						  }
+       						}else{
+       							$p1 = 0;
+       						}
+                    	?>
+                    	<?php if($p1==1){?>
+                        <li class="dealer-block drop-block"><a href="javascript:void(0)"><?php echo $customerSession->getCustomer()->getName()?><span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+                        	<ul>
+							<li><a href="<?php echo $this->getUrl('customer/account/')?>">My Account</a></li>
+							<li><a href="<?php echo $this->getUrl('enquiry/index/logoutsession')?>">Logout</a></li>
+							<li><a href="<?php echo $block->getUrl('subscription-plan')?>">Membership</a></li>
+						</ul>
+                        
+                        <?php } else {?>
+                        <li class="dealer-block drop-block"><a href="javascript:void(0)">Seller<span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+                    	<?php if($customerSession->isLoggedIn()) {?>
+						<ul>
+							<li><a class="confirmation12" href="<?php echo $block->getUrl('enquiry/index/gotoseller')?>">Register/Login</a></li>
+							<!-- <li><a class="confirmation12" href="<?php //echo $block->getUrl('enquiry/index/gotoseller')?>">Login</a></li> -->
+							<li><a href="<?php echo $block->getUrl('subscription-plan')?>">Membership</a></li>
+						</ul>
+						<?php }else{?>
+						<ul>
+							<li><a href="<?php echo $block->getUrl('seller')?>">Register / Login</a></li>
+							<!-- <li><a href="<?php //echo $block->getUrl('seller')?>">Login</a></li> -->
+							<li><a href="<?php echo $block->getUrl('subscription-plan')?>">Membership</a></li>
+						</ul>
+                        <?php }} ?>
+                        </li>
+                       <!--  <li class="currenct-block"><?php echo $block->getChildHtml('currency-header'); ?></li> -->
+                        <!--<li class="language-block"><?php //echo $block->getChildHtml('language-header'); ?></li>-->
+                       
+                        
+                        <?php $login_customer =  $block->getLayout()->createBlock('Magento\Customer\Block\Account\Customer');?>
+                         <?php if($login_customer->customerLoggedIn() && $p1!=1){?>
+                        <li class="login-block seller-sp drop-block"><a href="javascript:void(0)"><?php echo $customerSession->getCustomer()->getName()?><span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+                        	<ul>
+							<li><a href="<?php echo $this->getUrl('customer/account/')?>">My Account</a></li>
+							<li><a href="<?php echo $this->getUrl('enquiry/index/logoutsession')?>">Logout</a></li>
+						</ul></li>
+                        <?php } else if($login_customer->customerLoggedIn() && $p1==1) {?>
+                       <li class="login-block seller-sp drop-block"><a href="javascript:void(0)">BUYER<span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+                        	<ul>
+							<li><a class="confirmation13" href="<?php echo $this->getUrl('enquiry/index/gotobuyersignin')?>">Register</a></li>
+							<li><a class="confirmation13" href="<?php echo $this->getUrl('enquiry/index/gotobuyerlogin')?>">Login</a></li>
+							<li><a href="<?php echo $this->getUrl('subscription-plan')?>">MEMBERSHIP</a></li>
+						</ul></li>
+                        <?php }else{ ?>
+                        	<li class="login-block seller-sp drop-block"><a href="javascript:void(0)">BUYER<span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span></a>
+                        	<ul>
+							<li><a href="<?php echo $this->getUrl('customer/account/create')?>">Register</a></li>
+							<li><a href="<?php echo $this->getUrl('customer/account/login')?>">Login</a></li>
+							<li><a href="<?php echo $this->getUrl('subscription-plan')?>">MEMBERSHIP</a></li>
+						</ul></li>
+                        	<?php }?>
+                        	
+                        <li class="currenct-block sp-cur"><?php echo $block->getChildHtml('currency-header'); ?></li>
+                        <li class="currenct-block drop-block"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND</span><span class="arrow"><img src="<?php echo $this->getViewFileUrl('images/nav-arrow.png') ?>" /></span>
+                        	<ul>
+							<li><a href="http://halalglobalhub.com/my"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/Malasya.jpg">MY</span></a></li>
+							<li><a href="http://halalglobalhub.com/sg"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/Singapore.jpg">SG</span></a></li>
+							<li><a href="http://halalglobalhub.com/th"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/Thailand.jpg">TH</span></a></li>
+							<li><a href="http://halalglobalhub.com/id"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/Indonesia.jpg">ID</span></a></li>
+						</ul>
+                        </li>
+                        <li class="currenct-block"><div id="google_translate_element"></div></li>
+                    </ul>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!--header top end-->
+    
+	<div class="header-middle">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 logo-header">
+					<?php echo $block->getChildHtml('logo-header'); ?>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 sp-search">
+					<?php echo $block->getChildHtml('search-header-pro'); ?>
+				</div>
+				
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 sp-cart">
+					<ul class="other-cart-block <?php if($store_id==2){ echo 'wholeseller-other'; }else{echo 'retail-other';}?>">
+                    	<li class="reorder-link"><a href="<?php if($p==1){ echo $block->getUrl('sales/order/history/'); }else{ echo $block->getUrl('customer/account/login')."?p=redirect_order";}?>">Reorder</a></li>
+                    	<?php if($store_id==2){?>
+                        <li class="quote-link"><a href="<?php echo $block->getUrl('requestquote')?>">Request Quote</a></li>
+                        <?php }?>
+                        <li class="wish-header-link"><a href="<?php echo $block->getUrl('wishlist')."?wishlist=1"?>">Wishlist</a></li>
+                         <?php if($login_customer->customerLoggedIn()){?>
+                        <li class="account-header-link"><a href="<?php echo $block->getUrl('customer/account')?>">Hi! <?php echo substr($customerSession->getCustomer()->getName(), 0,6).".."?></a></li>
+                        <?php }else{?>
+                         <li class="account-header-link"><a href="<?php echo $block->getUrl('customer/account')?>">Hi! Guest</a></li>
+                        <?php }?>
+                        <li class="cart-link">
+                            <div class="minicart-header">
+                                <div class="minicart-content">
+                                	<?php echo $block->getChildHtml('cart-header'); ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+					
+					<!--<?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contact-header-1')->toHtml();?>-->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="header-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-3 hidden-sm hidden-xs sidebar-megamenu">
+					
+						<?php
+							echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('megamenu-vertical')->toHtml();
+						?>
+							
+						
+				</div>
+				
+				<!--<div class="col-lg-7 col-md-6 col-sm-6  col-xs-8 searchbox-header">
+					<?php //echo $block->getChildHtml('search-header-pro'); ?>
+				</div>-->
+                <div class="col-lg-7 col-md-6 col-sm-6  col-xs-8 main-megamenu">
+					<?php echo $block->getChildHtml('navigation-header-megamenu'); ?>
+					<div class="navigation-mobile-container">
+						<?php echo $block->getChildHtml('navigation.mobile'); ?>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-4 inner-right-bottom">
+					<!--<div class="sale-icon"></div>-->
+						
+					 	<!-- WISHLIST -->
+                       
+                        <!-- COMPARE -->
+                        <!--<div class=" sn hidden-xs hidden-sm header-wishlist">
+                            <a class="fa fa-heart" href="<?php //echo $block->getUrl('wishlist') ?>"></a>
+                        </div>
+                         <div class=" sn  hidden-xs hidden-sm  header-compare">
+
+
+                            <a class="fa fa-refresh" href="<?php //echo $block->getUrl('catalog/product_compare/index') ?>"></a>
+                        </div>-->
+                        
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	require(['jquery', 'spnews', 'jquery/ui'], function ($) {
+		var timer = !1;
+		_Ticker = $("#T1").newsTicker();
+		_Ticker.on("mouseenter",function(){
+			var __self = this;
+			timer = setTimeout(function(){
+				__self.pauseTicker();
+			},200);
+		});
+		_Ticker.on("mouseleave",function(){
+			clearTimeout(timer);
+			if(!timer) return !1;
+			this.startTicker();
+		});
+		////////
+		/*var element = $('.follow-scroll');
+		if(element.length){
+        	originalY = element.offset().top;
+			// Space between element and top of screen (when scrolling)
+			var topMargin = $(window).height()-140;
+			// Should probably be set in CSS; but here just for emphasis
+			var totalcount = "<?php //echo $comparecount?>";
+			//alert()
+			if($('body').hasClass('page-products') || $('body').hasClass('cms-index-index') || $('body').hasClass('catalog-product-view')){
+				//$('.box').show();
+				if(totalcount>0){
+					element.css({'display':'block'});
+				}else{
+					element.css({'display':'none'});
+				}
+			}else{
+				element.css({'display':'none'});
+			}
+			
+			
+		}*/
+		
+		/////////////
+		/*$(".header-container.header-style-1").sticky({
+			topSpacing:0,
+			zIndex:99
+		});*/
+		$(window).scroll(function(){
+			checkNav();
+		});
+		function checkNav(){
+			if($( window ).width() > 768){
+				var gerWH = 100;
+				if($(window).scrollTop() > gerWH){
+					showStickyMenu();
+				}else{
+					hideStickyMenu();
+				}
+			}
+		}
+		checkNav();
+		function showStickyMenu(){
+			$('.header-container.header-style-1').addClass('makeSticky');
+			//$('body').addClass('makePad');
+		}
+		function hideStickyMenu(){
+			$('.header-container.header-style-1').removeClass('makeSticky');
+			//$('body').removeClass('makePad');
+		}
+		/*var options = {
+            offset: '#showHere',
+            offsetSide: 'top',
+            classes: {
+                clone:   'banner--clone',
+                stick:   'banner--stick',
+                unstick: 'banner--unstick'
+            }
+        };*/
+		//var header = new Headhesive('.header-style-1');
+		
+		/////
+		$("#rating .wk-mp-collection-view-btn a").click(function(event) {
+			event.preventDefault();
+			var getid = $(this).attr('href');
+			$('html, body').animate({
+				scrollTop: $(getid).offset().top-200
+			}, 500);
+		});
+		/////////
+		
+		////////
+		var comparec = '<?php echo $comparecount?>';
+		comparec = parseInt(comparec);
+		var storeid = '<?php echo $store_id; ?>';
+		var comclick = 'no';
+		var imgtodrag;
+		if($('body').hasClass('page-products') || $('body').hasClass('cms-index-index') || $('body').hasClass('catalog-product-view')){
+				//$('.box').show();
+				if(comparec>0){
+					$('.box.follow-scroll').css({'display':'block'});
+				}else{
+					$('.box.follow-scroll').css({'display':'none'});
+				}
+			}else{
+				$('.box.follow-scroll').css({'display':'none'});
+			}
+		showAddComapre = function(){
+			//alert($('.smcqp-messages').text());
+			if($('#sp-infos').length > 0){
+				$('#sp-infos').remove();
+			}
+			if($('.smcqp-messages').text()=="You can only compare similar products." || $('.smcqp-messages').text()=="This Product is already to the comparison list." || $('.smcqp-messages').text()=="You can add maximum 4 product in comparison list."){
+				return;
+			}else{
+				comparec += 1;
+				var cart = $('.box.follow-scroll');
+				if(comparec>0){
+					$('.box.follow-scroll').css({'display':'block'});
+				}else{
+					$('.box.follow-scroll').css({'display':'none'});
+				}
+				flyToElement(imgtodrag, cart, comparec);
+			}
+		}
+		$('.action.tocompare').on('click', function (event) {
+			if(storeid == 2){
+				imgtodrag = $(this).parent().parent().parent().parent().parent().find("img.product-image-photo").eq(0);
+				//alert($(this).parent().parent().parent().parent().parent().html());
+			}else{
+				imgtodrag = $(this).parent().parent().parent().find("img.product-image-photo").eq(0);
+			}
+			////
+		});
+		function flyToElement(flyer, flyingTo, numbercom) {
+			var $func = $(this);
+			var divider = 3;
+			var flyerClone = $(flyer).clone();
+			$(flyerClone).css({position: 'absolute', top: $(flyer).offset().top + "px", left: $(flyer).offset().left + "px", opacity: 1, 'z-index': 1000});
+			$('body').append($(flyerClone));
+			var gotoX = $(flyingTo).offset().left + ($(flyingTo).width() / 2) - ($(flyer).width()/divider)/2;
+			var gotoY = $(flyingTo).offset().top + ($(flyingTo).height() / 2) - ($(flyer).height()/divider)/2;
+			 
+			$(flyerClone).animate({
+				opacity: 0.4,
+				left: gotoX,
+				top: gotoY,
+				width: $(flyer).width()/divider,
+				height: $(flyer).height()/divider
+			}, 700,
+			function () {
+				$(flyingTo).fadeOut('fast', function () {
+					$(flyingTo).fadeIn('fast', function () {
+						$(flyerClone).fadeOut('fast', function () {
+							$(flyerClone).remove();
+							$('.box.follow-scroll').find('.wish-number').html(numbercom);
+						});
+					});
+				});
+			});
+		}
+		///
+		/*$('.action.tocompare111').on('click', function (event) {
+			event.preventDefault();
+			//event.stopPropagation();
+			//alert(1);
+			if($('#sp-infos').length > 0){
+				$('#sp-infos').remove();
+			}
+			console.log(comclick);
+			//return false;
+			if(comclick == 'yes'){
+				return false;
+			}
+			comclick = 'yes';
+			var cart = $('.box.follow-scroll');
+			//alert(storeid);
+			var imgtodrag = '';
+			if(storeid == 2){
+				imgtodrag = $(this).parent().parent().parent().parent().parent().find("img.product-image-photo").eq(0);
+				//alert($(this).parent().parent().parent().parent().parent().html());
+			}else{
+				imgtodrag = $(this).parent().parent().parent().find("img.product-image-photo").eq(0);
+			}
+			
+			if (imgtodrag) {
+				var imgclone = imgtodrag.clone()
+					.offset({
+					top: imgtodrag.offset().top,
+					left: imgtodrag.offset().left
+				})
+					.css({
+					'opacity': '0.5',
+						'position': 'absolute',
+						'height': '150px',
+						'width': '150px',
+						'z-index': '100'
+				})
+					.appendTo($('body'))
+					.animate({
+						'top': cart.offset().top + 10,
+						'left': cart.offset().left + 10,
+						'width': 75,
+						'height': 75
+					}, 1000, 'easeInOutExpo');
+				setTimeout(function () {
+					cart.effect("shake", {
+						times: 2
+					}, 200);
+				}, 1500);
+	
+				imgclone.animate({
+					'width': 0,
+						'height': 0
+				}, function () {
+					$(this).detach();
+					//var getval = cart.find('.wish-number').text();
+					comparec = parseInt(comparec);
+					setTimeout(function () {
+        			 }, 4000);
+					//alert($('.smcqp-messages').text());
+					
+					if($('.smcqp-messages').text()=="You can only compare similar products." || $('.smcqp-messages').text()=="This Product is already to the comparison list." || $('.smcqp-messages').text()=="You can add maximum 4 product in comparison list."){
+						comparec = comparec;
+						//alert(2);
+					}else if($('.smcqp-messages').text()==""){
+						//alert(1);
+						comparec = comparec;
+					}else{
+						comparec += 1;
+						
+						if(comparec>0){
+							if($('body').hasClass('page-products') || $('body').hasClass('cms-index-index') || $('body').hasClass('catalog-product-view')){
+								//$('.box').show();
+								cart.css({'display':'block'});
+								//alert(1);
+							}else{
+								//alert(2);
+								//$('.box').hide();
+								cart.css({'display':'none'});
+							}
+						}
+					}
+					//alert(comparec);
+					//comclick = 'no';
+					setTimeout(function(){ comclick = 'no'; }, 1000);
+					cart.find('.wish-number').html(comparec);
+				});
+			}
+			//return false;
+		});*/
+		////
+		//
+		//$('.update-cart-item').click(function(event){
+		/*$(document).on('click', '.minicart-wrapper button.update-cart-item', function(event){
+			////event.stopPropagation();
+			alert(111);
+			event.preventDefault();
+     		event.stopPropagation();
+		})*/
+		///////
+	});
+</script>
+<script type="text/javascript">
+	function googleTranslateElementInit() {
+	  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+	}
+	function googleTranslateElementInit() {
+	     new google.translate.TranslateElement(
+	                {pageLanguage: 'en'},
+	                'google_translate_element'
+	            );
+	        /*
+	        To remove the "powered by google",
+	        uncomment one of the following code blocks.
+	        NB: This breaks Google's Attribution Requirements:
+	        https://developers.google.com/translate/v2/attribution#attribution-and-logos
+	    */
+
+	    // Native (but only works in browsers that support query selector)
+	    if(typeof(document.querySelector) == 'function') {
+	        document.querySelector('.goog-logo-link').setAttribute('style', 'display: none');
+	        document.querySelector('.goog-te-gadget').setAttribute('style', 'font-size: 0');
+	    }
+
+	    // If you have jQuery - works cross-browser - uncomment this
+	    
+	    	//$('.goog-logo-link').css('display', 'none');
+	    	//$('.goog-te-gadget').css('font-size', '0');
+			
+			//document.getElementsByClassName("goog-logo-link").style.display = "none";
+			//document.getElementsByClassName("goog-te-gadget").style.fontSize = "0";
+		
+	    	}
+	    
+
+			//var $textfield = find("#google-translate");
+			//var $popup = find("#google_translate_element");
+			// var $select = $popup.find("select");
+	
+	/*$textfield.click(function () {
+		$popup.fadeIn("fast");
+		alert(1);
+		return false;
+	});
+	
+	$select.bind("change", function () {
+		alert(2);
+		$popup.fadeOut("fast");
+	});*/
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+	$(document).ready(function() {
+		//////
+		
+		/*$(document).on('click', 'select.goog-te-combo', function(){
+			alert( this.value );
+		});*/
+		/////
+    });
+    
+});
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+   var elems = document.getElementsByClassName('confirmation12');
+   var confirmIt = function (e) {
+       if (!confirm('Are you sure want to switch to seller panel.')) e.preventDefault();
+   };
+   for (var i = 0, l = elems.length; i < l; i++) {
+       elems[i].addEventListener('click', confirmIt, false);
+   }
+</script>
+<script type="text/javascript">
+   var elems = document.getElementsByClassName('confirmation13');
+   var confirmIt = function (e) {
+       if (!confirm('Are you sure want to switch to Buyer panel.')) e.preventDefault();
+   };
+   for (var i = 0, l = elems.length; i < l; i++) {
+       elems[i].addEventListener('click', confirmIt, false);
+   }
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+	$(document).ready(function() {
+		var maxTime = 2000; // 2 seconds
+		var time = 0;
+		var interval = setInterval(function () {
+  if($(".goog-te-combo option:first").text()!="") {
+   //alert("sdsd");
+    $(".goog-te-combo option:first").text('English');
+      // alert(a);
+    clearInterval(interval);
+  } else {
+    if (time > maxTime) {
+      // still hidden, after 2 seconds, stop checking
+      clearInterval(interval);
+      return;
+    }
+
+    // not visible yet, do something
+    time += 100;
+  }
+}, 200);
+		
+	});
+	
+});
+</script>

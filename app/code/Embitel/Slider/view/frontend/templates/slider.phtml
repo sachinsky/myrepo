@@ -1,0 +1,26 @@
+<?php $_slider = $this->getCollection(); ?>
+<?php if ($_slider->getSize()): ?>
+<div class="slider_list_view">
+    <?php foreach ($_slider as $sliderItem): ?>
+        <div id="item_<?php echo $sliderItem->getId() ?>" class="slider_list_item">
+            <h2>
+                <a href="<?php echo $this->getItemUrl($sliderItem) ?>">
+                    <?php echo $this->escapeHtml($sliderItem->getTitle()) ?>
+                </a>
+            </h2>
+
+            <div class="slider_item_subtitle">
+                <?php echo $this->formatDate($sliderItem->getPublishedAt()) ?> |
+                <?php echo $this->escapeHtml($sliderItem->getAuthor()) ?>
+            </div>
+
+            <?php if ($imageUrl = $this->getImageUrl($sliderItem, 100)): ?>
+               <p><img src="<?php echo $imageUrl ?>" alt="<?php echo $this->escapeHtml($sliderItem->getTitle()); ?>" /></p>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php echo $this->getPager() ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('You have no Slider.'); ?></span></div>
+<?php endif ?>

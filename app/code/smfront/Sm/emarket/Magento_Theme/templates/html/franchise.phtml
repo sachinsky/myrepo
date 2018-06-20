@@ -1,0 +1,543 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$redirect = $objectManager->get('\Magento\Framework\App\Response\Http');
+$directory = $objectManager->get('\Magento\Directory\Block\Data');
+$objectManager =   \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+
+$result1 = $connection->fetchAll("SELECT * FROM country");
+?>
+<div class="col-lg-12 col-md-12">
+    <div class="franchise-form">
+        <h2>Franchise Application Form</h2>
+        <p>
+        The information you provide will be held in the strictest confidence.  We encourage you to share any relevant information and include anything that you find will make your candidacy stand out as a potential franchisee. Thank you again for your interest in HGH.
+        </p>
+        <form class="Franchise-Application" id="contactForm" method="post" action="<?php echo $block->getUrl('franchises/index/savefranchise')?>">
+        	<div class="app-form">
+            	
+                <div class="form-group">
+                	<div class="f-title"><label>Date</label></div>
+                	<div class="f-field"><input type="text" name="date" id="currentDate" class="form-control"></div>
+                </div>
+                <h3>Personal Information:</h3>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Name <span>*</span></label></div>
+                	<div class="f-field"><input type="text" name="firstname" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Citizen of <span>*</span></label></div>
+                	<div class="f-field">
+                    	<select class="form-control" name="citizen">
+                            <option value="">Please select Citizen</option>
+                            <?php foreach($result1 as $result2){?>
+                            <option value="<?php echo $result2['name']?>"><?php echo $result2['name']?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Permanent Resident of <span>*</span></label></div>
+                	<div class="f-field">
+                    	<select class="form-control" name="resident">
+                            <option value="">Please select Resident</option>
+                            <option value="">Please select Citizen</option>
+                            <?php foreach($result1 as $result2){?>
+                            <option value="<?php echo $result2['name']?>"><?php echo $result2['name']?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Gender <span>*</span></label></div>
+                	<div class="f-field">
+                    	<div class="sp-inline"><input class="form-check-input" name="gender" type="radio" id="inlineCheckbox1" value="option1"> Male</div>
+                        <div class="sp-inline"><input class="form-check-input" name="gender" type="radio" id="inlineCheckbox1" value="option1"> Female</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Date of Birth <span>*</span></label></div>
+                	<div class="f-field"><input type="date" name="dob" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Residential Address <span>*</span></label></div>
+                	<div class="f-field"><input type="text" name="address" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Country <span>*</span></label></div>
+                	<div class="f-field">
+                    	<?php echo $directory->getCountryHtmlSelect(); ?>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>State/ Province <span>*</span></label></div>
+                	<div class="f-field">
+                    	<?php echo $directory->getRegionHtmlSelect(); ?>
+                    </div>
+                </div>
+                
+                 <div class="form-group">
+                    <div class="f-title"><label>City <span>*</span></label></div>
+                    <div class="f-field"><input type="text" name="city" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Postal / Zip Code <span>*</span></label></div>
+                	<div class="f-field"><input type="text" name="zipcode" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Phone No</label></div>
+                	<div class="f-field"><input type="text" name="phonenumber" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Mobile No <span>*</span></label></div>
+                	<div class="f-field"><input type="text" name="mobilenumber" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Email <span>*</span></label></div>
+                	<div class="f-field"><input type="text" name="email" class="form-control"></div>
+                </div>
+                
+                <div class="form-group">
+                	<div class="f-title"><label>Have you ever owned a Business <span>*</span></label></div>
+                	<div class="f-field">
+                    	<div class="sp-inline"><input class="form-check-input" name="owned" type="radio" id="yes" value="yes"> Yes</div>
+                        <div class="sp-inline"><input class="form-check-input" name="owned" type="radio" id="no" value="no"> No</div>
+                    </div>
+                </div>
+                
+                <div id="owned_business">
+                	
+                    <h3>If yes, please provide Business Information <span>*</span></h3>
+                    <div class="form-group">
+                        <div class="f-title"><label>Company name(S)</label></div>
+                        <div class="f-field"><input type="text" name="company" class="form-control"></div>
+                    </div>
+                    <h3>Address</h3>
+                    <!-- <div class="form-group">
+                        <div class="f-title"><label>Country</label></div>
+                        <div class="f-field">
+                        	<?php echo $directory->getCountryHtmlSelect(); ?>
+                        </div>
+                    </div> -->
+                    
+                    <!-- <div class="form-group">
+                        <div class="f-title"><label>State / Province</label></div>
+                        <div class="f-field">
+                        	<?php echo $directory->getRegionHtmlSelect(); ?>
+                        </div>
+                    </div> -->
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>City</label></div>
+                        <div class="f-field">
+                        	<input type="text" name="ccity" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Postal / Zip Code</label></div>
+                        <div class="f-field"><input type="text" name="czipcode" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Phone No.</label></div>
+                        <div class="f-field"><input type="text" name="cphonenumber" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Ownership (Prop/ Pvt. Partner)</label></div>
+                        <div class="f-field"><input type="text" name="ownership" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Nature of Business</label></div>
+                        <div class="f-field"><input type="text" name="nature" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Principal Product/Brand</label></div>
+                        <div class="f-field"><input type="text" name="brand" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Years in Business</label></div>
+                        <div class="f-field">
+                        	<select class="form-control" name="byear">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Annual Turnover (current fiscal year)</label></div>
+                        <div class="f-field"><input type="text" name="turnover" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Country/Location preference</label></div>
+                        <div class="f-field"><input type="text" name="locationprefer" class="form-control"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="f-title"><label>Any other information</label></div>
+                        <div class="f-field"><input type="text" name="other" class="form-control"></div>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group-bt">
+                	 <button type="submit" class="continue">Submit</button>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+	require([
+		'jquery',
+		'owlcarousel'
+	], function ($) {
+		///////
+         $("#country option[value='']").remove();
+            $("#country").prepend('<option selected="selected" value="">Please select country</option>');
+            $("#country").trigger('change');
+		var d = new Date();
+		var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+		$('input#currentDate').val(strDate);
+		$('input[name="owned"]').change(function(){
+			var getval = $('input[name="owned"]:checked').val();
+			if(getval == 'yes'){
+				$('#owned_business').slideDown('fast');
+			}else{
+				$('#owned_business').slideUp('fast');
+			}
+        	//alert($('input[name="owned"]:checked').val());
+    	});
+		//////   
+	});
+</script>
+<script type="text/javascript">
+                    require(['jquery'], function($){
+                        $(document).on('change','#country',function() {
+                            var param = 'country='+$('#country').val();
+                            $.ajax({
+                                showLoader: true,
+                                url: '<?php echo $this->getBaseUrl(); ?>seller/index/directory/',
+                                data: param,
+                                type: "GET",
+                                dataType: 'json'
+                            }).done(function (data) {
+                                var $state = $('.validate-state');
+                                    $state.empty();
+                                    $state.append('<option value=>Please select state</option>');
+                                for (var i = 0; i < data.value.length; i++) {
+                                    var item = data.value[i];
+                                    console.log(item.default_name);
+                                    $state.append('<option value=' + item.region_id + '>' + item.default_name + '</option>');
+                                }
+
+                            });
+                        });
+                    });
+                </script>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'spbootstrapValidator'
+    ], function ($) {
+        $(document).ready(function() {
+    // Generate a simple captcha
+    function randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    function generateCaptcha() {
+        $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
+    }
+
+    generateCaptcha();
+
+    $('#contactForm')
+        .bootstrapValidator({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                firstname: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The first name is required'
+                        },
+                        regexp: {
+                        regexp: /^[a-zA-Z\s]+$/,
+                        message: 'The name can only consist of alphabetical and spaces'
+                    }
+                    }
+                },
+                citizen: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Select Citizen'
+                        }
+                    }
+                },
+                owned: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select one'
+                        }
+                    }
+                },
+                dob: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Date of birth'
+                        }
+                    }
+                },
+                resident: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Select Permanent Resident'
+                        }
+                    }
+                },
+                country_id: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Select Country'
+                        }
+                    }
+                },
+                region: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Select State'
+                        }
+                    }
+                },
+                gender: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Select Gender'
+                        }
+                    }
+                },
+                address: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Address'
+                        }
+                    }
+                },
+                company: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Company Name'
+                        }
+                    }
+                },
+                ownership: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Ownership'
+                        }
+                    }
+                },
+                nature: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Nature of business'
+                        }
+                    }
+                },
+                 locationprefer: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Country/Location preference'
+                        }
+                    }
+                },
+                turnover: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Turnover of current fiancial year'
+                        }
+                    }
+                },
+                byear: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Nature of business'
+                        }
+                    }
+                },
+                brand: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter Principal/Brand'
+                        }
+                    }
+                },
+                ccity: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter City'
+                        },
+                        regexp: {
+                        regexp: /^[a-zA-Z\s]+$/,
+                        message: 'City can only consist of alphabetical and spaces'
+                    }
+
+                    }
+                },
+                city: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please Enter City'
+                        },
+                        regexp: {
+                        regexp: /^[a-zA-Z\s]+$/,
+                        message: 'City can only consist of alphabetical and spaces'
+                    }
+
+                    }
+                },
+                phonenumber: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The phone number is required'
+                        },
+                        stringLength: {
+                        min: 8,
+                        max: 13
+                      },
+                        regexp: {
+                            message: 'The phone number can only contain the digits, spaces, -, (, ), + and .',
+                            regexp: /^[0-9\s\-()+\.]+$/
+                        }
+                    }
+                },
+                cphonenumber: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The phone number is required'
+                        },
+                        stringLength: {
+                        min: 8,
+                        max: 13
+                      },
+                        regexp: {
+                            message: 'The phone number can only contain the digits, spaces, -, (, ), + and .',
+                            regexp: /^[0-9\s\-()+\.]+$/
+                        }
+                    }
+                },
+                zipcode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Zipcode is required'
+                        },
+                        stringLength: {
+                        min: 4,
+                        max: 6
+                      },
+                        regexp: {
+                            message: 'The Zipcode can only contain the digits, spaces, -, (, ), + and .',
+                            regexp: /^[0-9\s\-()+\.]+$/
+                        }
+                    }
+                },
+                czipcode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Zipcode is required'
+                        },
+                        stringLength: {
+                        min: 4,
+                        max: 6
+                      },
+                        regexp: {
+                            message: 'The Zipcode can only contain the digits, spaces, -, (, ), + and .',
+                            regexp: /^[0-9\s\-()+\.]+$/
+                        }
+                    }
+                },
+                mobilenumber: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The mobile number is required'
+                        },
+                        stringLength: {
+                        min: 8,
+                        max: 13
+                      },
+                        regexp: {
+                            message: 'The phone number can only contain the digits, spaces, -, (, ), + and .',
+                            regexp: /^[0-9\s\-()+\.]+$/
+                        }
+                    }
+                },
+                email: {
+                    trigger: 'blur',
+                    validators: {
+                        notEmpty: {
+                            message: 'The email address is required'
+                        },
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }
+                    }
+                },
+                message: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The message is required'
+                        },
+                        stringLength: {
+                            max: 700,
+                            message: 'The message must be less than 700 characters long'
+                        }
+                    }
+                },
+                captcha: {
+                    validators: {
+                        callback: {
+                            message: 'Wrong answer',
+                            callback: function(value, validator, $field) {
+                                var items = $('#captchaOperation').html().split(' '),
+                                    sum   = parseInt(items[0]) + parseInt(items[2]);
+                                return value == sum;
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .on('err.form.fv', function(e) {
+            // Regenerate the captcha
+            generateCaptcha();
+        });
+});
+    });
+</script>

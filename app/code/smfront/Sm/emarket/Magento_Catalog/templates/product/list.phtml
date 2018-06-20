@@ -1,0 +1,1060 @@
+<?php
+$comparecount = $this->helper('Magento\Catalog\Helper\Product\Compare')->getItemCollection()->count();
+?>
+
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+
+<?php
+$catalog_ids1 = array();
+$p=0;
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');       
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+$currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currency_code = $currencysymbol->getStore()->getCurrentCurrencyCode();
+if($currency_code=="INR"){
+    $currency_code = "₹";
+}
+ $customerSession = $objectManager->get('Magento\Customer\Model\Session');
+ if($customerSession->isLoggedIn()) {
+// 	$customgp = $customerSession->getCustomer()->getGroupId();
+//  if($customgp==2){
+     $p=1;
+  }else{
+  	$p=0;
+  }
+// }else{
+//    $p=0;
+// }
+?>
+<?php
+
+
+
+?>
+<?php
+if((!empty($category)) && (!empty($_REQUEST['filter']))){
+	if($_REQUEST['filter']=="newarrival"){
+		//echo "hello";
+		$catalog_ids1[] = $category->getId();
+		$catalog_ids = array('65');
+		$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+		$_productCollection = $productCollection->addAttributeToSelect('*')
+		             ->addCategoriesFilter(array('eq' => $catalog_ids1))
+		             ->addCategoriesFilter(array('eq' => $catalog_ids))
+		            ->load();
+		        }
+    else if($_REQUEST['filter']=="featured"){
+		//echo "hello";
+		$catalog_ids1[] = $category->getId();
+		$catalog_ids = array('66');
+		$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+		$_productCollection = $productCollection->addAttributeToSelect('*')
+		             ->addCategoriesFilter(array('eq' => $catalog_ids1))
+		             ->addCategoriesFilter(array('eq' => $catalog_ids))
+		            ->load();
+		        }
+    else if($_REQUEST['filter']=="mostviwed"){
+		//echo "hello";
+		$catalog_ids1[] = $category->getId();
+		$productCollection = $objectManager->create('Magento\Reports\Model\ResourceModel\Product\CollectionFactory');
+		$_productCollection = $productCollection->create()
+		          ->addAttributeToSelect('*')
+		          ->addCategoriesFilter(array('eq' => $catalog_ids1))
+		          ->addAttributeToFilter('status','1')
+		          ->addAttributeToFilter('visibility','4')
+		          ->load();
+		        }
+	else if($_REQUEST['filter']=="topselling"){
+		//echo "hello";
+		$productIds = array();
+		$catalog_ids1[] = $category->getId();
+		$productCollection = $objectManager->create('Magento\Reports\Model\ResourceModel\Report\Collection\Factory'); 
+        $collection = $productCollection->create('Magento\Sales\Model\ResourceModel\Report\Bestsellers\Collection');
+        $collection->setPeriod('year');
+        foreach ($collection as $item) {
+		    $productIds[] =  $item['product_id'];
+		} 
+		//print_r($productIds);
+		$productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+		$_productCollection = $productCollection->addAttributeToSelect('*')
+		             ->addCategoriesFilter(array('eq' => $catalog_ids1))
+		             ->addAttributeToFilter('entity_id', array('in' => $productIds))
+		            ->load();
+		        }
+}else{
+		$_productCollection = $block->getLoadedProductCollection();
+      }
+        $_helper = $this->helper('Magento\Catalog\Helper\Output');
+		$_config = $this->helper('Sm\Emarket\Helper\Data');
+		$homeStyle = $_config->getThemeLayout('home_style');
+?>
+
+<section id="tab-section">
+	
+        <div id="product-gallery">
+            	<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+<?php else: ?>
+	<div class="toolbar-top">
+    <?php echo $block->getToolbarHtml() ?>
+	</div>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="<?php if($store_id == 2){ echo 'wholesale-list'; }?> category-product products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+		
+		<?php if($viewMode == 'grid'){ ?>
+		<?php $input = array("new-arrival", "top-selling", "most-viewed", "featured"); ?>
+        <ol class="products list items product-items row new-style-sp">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+            	<?php $rand_keys = array_rand($input, 2); ?>
+                <?php if($store_id == 2){?>
+
+                <li class="item sp-wholeseller product product-item <?php echo $input[$rand_keys[0]]; ?>">
+                <?php }else{?>
+                <li class="item product product-item <?php echo $input[$rand_keys[0]]; ?>">
+                <?php }?>
+					<div class="product-item-info" data-container="product-grid">
+                    	
+						<div class="item-inner <?php if ($homeStyle=='home-1') {echo 'style1';} ?>">
+							<div class="box-image">
+                            	<?php if($_product->getAttributeText('assured')=="Yes"):?>
+                                    <div class="sp_assured_new"><img src="<?php echo $this->getViewFileUrl('images/Hallal-Assured-final.png') ?>" ></div>
+                                <?php endif;?>
+                                <?php
+                                                $productFactory = $objectManager->get('\Magento\Catalog\Model\ProductFactory');
+                                                $product4 = $productFactory->create()->setStoreId(2)->load($_product->getId());
+                                                $sp = array();
+                                                $tier_price = $product4->getTierPrices();
+                                                if(count($tier_price) > 0){
+                                                    foreach($tier_price as $price){
+                                                        if($price['value']!="")
+                                                        $spprice[] = $price['value']; 
+                                                    }
+                                                }else{
+                                                    $spprice[] = null;
+                                                }
+                                                sort($spprice);
+                                               // print_r($spprice);
+                                                ?>
+                                <?php if($store_id == 2){?>
+                                	<?php if(count($tier_price) > 0){?>
+                                    <div class="wsale">
+                                        <div class="wsale-inner">
+                                        <a href="#"><img class="img" src="<?php echo $this->getViewFileUrl('images/whole.png') ?>" /></a>
+                                        <ul>
+                                            <li><?php echo "As low as ".$currency_code.number_format((float)$spprice[0], 2, '.', '');?></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <?php }$spprice=null;?>
+                                    
+                                    <!--<div class="con-member-wp"><span><img class="img" src="<?php //echo $this->getViewFileUrl('images/com-member.png') ?>" /></span>Gold Membership</div>-->
+                                    
+                                <?php }?>
+								<?php $productImage = $block->getImage($_product, $image);?>
+								
+								<!--LABEL PRODUCT-->
+
+									<?php
+										$specialprice = $_product->getSpecialPrice();
+										$specialPriceFromDate = $_product->getSpecialFromDate();
+										$specialPriceToDate = $_product->getSpecialToDate();
+										$today = time();
+
+										if ($specialprice && $_config->getAdvanced('show_salelabel')) {
+											if ($today >= strtotime($specialPriceFromDate) && $today <= strtotime($specialPriceToDate) || $today >= strtotime($specialPriceFromDate) && is_null($specialPriceToDate)) { ?>
+												<div class="label-product label-sale">
+													<span class="sale-product-icon">
+														<?php echo __('Sale'); ?>
+													</span>
+												</div>
+											<?php }
+										}
+									?>
+									
+									<?php
+									$now = date("Y-m-d");
+									$newsFrom = substr($_product->getNewsFromDate(), 0, 10);
+									$newsTo = substr($_product->getNewsToDate(), 0, 10);
+									
+									
+									if (($newsTo != '' || $newsFrom != '') && $_config->getAdvanced('show_newlabel')) {
+										if (($newsTo != '' && $newsFrom != '' && $now >= $newsFrom && $now <= $newsTo) || ($newsTo == '' && $now >= $newsFrom) || ($newsFrom == '' && $now <= $newsTo)) {?>
+												<div class="label-product label-new">
+													<span class="new-product-icon"><?php echo __('New'); ?></span>
+												</div>
+										<?php }
+									} ?>
+									
+									
+								<!--END LABEL PRODUCT-->
+
+								<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">									
+										<?php echo $productImage->toHtml(); ?>
+								</a>
+								
+							</div>
+							
+							<div class="product details product-item-details box-info">
+								
+								<?php
+									$_productNameStripped = $block->stripTags($_product->getName(), null, true);
+								?>
+								<h2 class="product name product-item-name product-name">
+									<a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+										<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+									</a>
+                                    
+								</h2>
+								<?php
+								$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+								$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+								if(!empty($result1)){
+								    foreach($result1 as $row1){
+								        $seller_id = $row1['seller_id'];
+								    }
+								    $result2 = $connection->fetchAll("SELECT * FROM marketplace_userdata where seller_id='".$seller_id."'");
+								    foreach($result2 as $row2){
+								        $shopname = $row2['shop_url'];
+								    }
+								}else{
+								    $shopname = "Halalhub";
+								}                                               
+								?>
+								<?php if($store_id==2){?>
+								<div class="seller_name">
+									<?php echo "<span>Seller / Company :</span> ".$shopname?>
+								</div>
+								<?php }?>
+
+								<?php
+									$storeId = '1'; //Store ID
+								$product_id = $_product->getId();
+								$productFactory = $objectManager->get('\Magento\Catalog\Model\ProductFactory');
+								$product = $productFactory->create()->setStoreId($storeId)->load($product_id);
+									?>
+									<?php if($store_id==2){?>
+									<div class="retail-price">
+										<?php if($product->getPrice()=="0"){
+											$regularPrice = $product->getPriceInfo()->getPrice('regular_price');
+											$newprice =  $regularPrice->getMinRegularAmount(); 
+										}else{
+											$newprice = $product->getPrice();
+										}
+										 $ab1 = (string)$newprice;
+                                         $newprice = number_format((float)$ab1, 2, '.', '');
+											?>
+										<?php echo "<span>Retail Price :</span>".$currency_code.$newprice?>
+									</div>
+									<?php }?>
+                                    <?php if($store_id != 2){?>
+								<div class="sp-rating">
+									<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+                                	<!-- <div class="sp-review">256 reviews</div> -->
+								</div>
+                                <?php }?>
+								<?php if($store_id==2){?>
+                                	<div class="WholesalePrice">Wholesale Price</div>
+                                	<?php }?>
+                                <div class="sp-product-price">
+                                	
+									<?php echo $block->getProductDetailsHtml($_product); ?>
+									
+									<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+									
+                                   
+                                 </div>
+                                 <?php if($store_id==2){?>
+                                    <div class="moq-holder">
+                                        <div class="moq">
+                                            <?php echo "MOQ : ".$_product->getWholesellerMinQty()?>
+                                        </div>
+                                        <?php if($_product->getCustomBranding()=="34"){?>
+                                        <a href="#" class="moq2">Custom Branding</a>
+                                        <?php }?>
+                                    </div>
+									<?php }?>
+                                    <?php if($store_id==2){?>
+                                    <div class="sp-bottom-action">
+                                    	<?php if($_product->getCountryOfManufacture()=="IN"){
+                                    		$img = "india.png";
+                                    	}else if($_product->getCountryOfManufacture()=="SG"){
+                                    		$img = "singapore.png";
+                                    	}else if($_product->getCountryOfManufacture()=="ID"){
+                                    		$img = "indonesia.png";
+                                    	}else if($_product->getCountryOfManufacture()=="MY"){
+                                    		$img = "malaysia.png";
+                                    	}else if($_product->getCountryOfManufacture()=="TH"){
+                                    		$img = "thailand.png";
+                                    	}else{
+                                    		$img = "india.png";
+                                    	}
+
+                                    		?>
+                                    		 <?php
+									 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+									$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+									$totalincome = 0;
+									$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+									if(!empty($result1)){
+									    foreach($result1 as $row1){
+									        $seller_id = $row1['seller_id'];
+									        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($seller_id);
+											$customerEmail = $customerObj->getEmail();
+									    }
+									     $result2 = $connection->fetchAll("SELECT * FROM marketplace_saleslist where seller_id='".$seller_id."'");
+									     foreach($result2 as $row2){
+									         $totalincome = $totalincome + $row2['magepro_price'];
+									     }
+									}else{
+									    $seller_id = 0;
+									    $totalincome = 0;
+									    $customerEmail = "halalglobalhub@gmail.com";
+									}   
+									 $result3 = $connection->fetchAll("SELECT * FROM indglobal_sellerrating where title <= '".$totalincome."' AND author >= '".$totalincome."'");
+									 if(!empty($result3)){
+									 	foreach($result3 as $row3){
+									          $totalincome1 = $row3['rating'];
+									          //echo '>>> '.$totalincome;
+									      }     
+									  }else{
+									  	 $totalincome1 = 1;
+									  }
+									        
+									  $result4 = $connection->fetchAll("SELECT * FROM indglobal_seller where customer_id='".$seller_id."'");
+									  if(!empty($result4)){
+									  	foreach($result4 as $row4){
+									          $sellertype = $row4['business_category'];
+									          //echo '>>> '.$totalincome;
+									      }    
+									  }else{
+									  	$sellertype = "Admin";
+									  }                              
+									?>
+									<input type="hidden" value="<?php echo $customerEmail?>" class="seller_id">
+                                    	<div class="sp-top-section">
+                                        <span>Type of seller:</span> <?php echo $sellertype?> <span class="con-icon"><img class="img" src="<?php echo $this->getViewFileUrl('images')."/".$img ?>" /></span>
+                                        <span class="con-icon"><a href="#" class="sp-tips" title="Gold Membership"><img class="img" src="<?php echo $this->getViewFileUrl('images/com-member.png') ?>" /></a></span>
+                                        
+                                        </div>
+                                        
+                                        <div class="sp-bottom-section">
+                                        	<div class="sp-3rating" data-id="<?php echo $totalincome1; ?>"><img class="img" src="<?php echo $this->getViewFileUrl('images/3star.png') ?>" /></div>
+                                            <div class="sp-transaction">Transaction Value</div>
+                                            <div class="sp-mail"><a href="#" data-toggle="modal" class="sendmail" id="<?php echo $_product->getId()?>" data-target="#contactModal"><img class="img" src="<?php echo $this->getViewFileUrl('images/wmail.png') ?>"></a></div>
+                                            <?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+                                            <div class="sp-com"><a class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button"><img class="img" src="<?php echo $this->getViewFileUrl('images/com-w.png') ?>" /></a></div>
+                                        </div>
+                                    </div>
+                                    <?php }?>
+                                 <?php if ($homeStyle=='home-1' && $store_id != 2) {?>
+									<div class="bottom-action">
+									<?php if($_config->getAdvanced('show_addtocart_button')){?>
+										<?php if ($_product->isSaleable()): ?>
+											<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+											<?php if($_product->getTypeId()=="configurable"){?>
+											 <a href="<?php echo $_product->getProductUrl()?>" class="confirmation"><img src="<?php echo $this->getViewFileUrl('images/s-cart.png') ?>"></a>
+											<?php }else{?>
+											<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+												<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+												<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+												<?php echo $block->getBlockHtml('formkey')?>
+												
+												<button type="submit"
+														title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+														class="action tocart btn-action primary btn-cart">
+													<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+													
+													<?php ?>
+												</button>
+											</form>
+											<?php }?>
+										<?php else: ?>
+											<?php if ($_product->getIsSalable()): ?>
+												<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+											<?php else: ?>
+												<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+											<?php endif; ?>
+										<?php endif; ?>
+									<?php } ?>
+									
+									<?php if($_config->getAdvanced('show_wishlist_button')){?>
+										<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+										<?php if($p==1){?>
+											<a href="#" class="action towishlist btn-action link-wishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"  aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>' data-action="add-to-wishlist"  role="button">
+												<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+											</a>
+											<?php }else{?>
+											<a href="#" class="action towishlist notloginwishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"  aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" role="button">
+												<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+											<?php }?>
+										<?php endif; ?>
+									<?php } ?>
+									
+									<?php if($_config->getAdvanced('show_compare_button')){?>
+										<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+										<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
+											<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+										</a>
+									<?php } ?>
+								</div>
+								<?php } ?>
+
+								<?php if ($homeStyle!='home-1') {?>
+
+								<div class="bottom-action">
+
+									<?php if($_config->getAdvanced('show_addtocart_button')){?>
+
+										<?php if ($_product->isSaleable()): ?>
+											<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+
+											<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+												<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+												<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+												<?php echo $block->getBlockHtml('formkey')?>
+												<button type="submit"
+														title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+														class="action tocart primary btn-cart">
+													<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+												</button>
+											</form>
+
+										<?php else: ?>
+											<?php if ($_product->getIsSalable()): ?>
+												<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+											<?php else: ?>
+												<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+											<?php endif; ?>
+										<?php endif; ?>
+									<?php } ?>
+									
+									<?php if($_config->getAdvanced('show_wishlist_button')){?>
+										<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+											<a href="#" class="action towishlist btn-action link-wishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"  aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>' data-action="add-to-wishlist"  role="button">
+												<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+											</a>
+										<?php endif; ?>
+									<?php } ?>
+									
+									<?php if($_config->getAdvanced('show_compare_button')){?>
+										<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+										<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
+											<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+										</a>
+									<?php } ?>
+								</div>
+								<?php } ?>
+			
+							</div>
+						</div>
+					</div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+		
+		<?php } else {?>
+			<ol class="products list items product-items <?php if($store_id == 2){ echo 'wholeseller-list-view';} ?>">
+				<?php foreach ($_productCollection as $_product): ?>
+					<li class="item respl-item-list product product-item">
+						<div class="product-item-info" data-container="product-grid">
+							<div class="item-inner">
+								<div class="box-image-list">
+                                	
+									<?php $product12 = $objectManager->create('Magento\Catalog\Model\Product')->load($_product->getId());
+									$images = $product12->getMediaGalleryImages();
+									//echo "aa".$images->count();
+									?>
+                                	<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="more-pic"><?php echo "+ ".$images->count()." Photos"?></a>
+									<?php $productImage = $block->getImage($_product, $image); ?>
+									
+									<!--LABEL PRODUCT-->
+
+										<?php
+											$specialprice = $_product->getSpecialPrice();
+											$specialPriceFromDate = $_product->getSpecialFromDate();
+											$specialPriceToDate = $_product->getSpecialToDate();
+											
+											$today = time();
+
+											if ($specialprice && $_config->getAdvanced('show_salelabel')) {
+												if ($today >= strtotime($specialPriceFromDate) && $today <= strtotime($specialPriceToDate) || $today >= strtotime($specialPriceFromDate) && is_null($specialPriceToDate)) { ?>
+													<div class="label-product label-sale">
+														<span class="sale-product-icon">
+															<?php echo __('Sale'); ?>
+														</span>
+													</div>
+												<?php }
+											}
+										?>
+										
+										<?php
+										$now = date("Y-m-d");
+										$newsFrom = substr($_product->getNewsFromDate(), 0, 10);
+										$newsTo = substr($_product->getNewsToDate(), 0, 10);
+										
+										
+										if (($newsTo != '' || $newsFrom != '') && $_config->getAdvanced('show_newlabel')) {
+											if (($newsTo != '' && $newsFrom != '' && $now >= $newsFrom && $now <= $newsTo) || ($newsTo == '' && $now >= $newsFrom) || ($newsFrom == '' && $now <= $newsTo)) {?>
+													<div class="label-product label-new">
+														<span class="new-product-icon"><?php echo __('New'); ?></span>
+													</div>
+											<?php }
+										} ?>
+										
+										
+									<!--END LABEL PRODUCT-->
+
+									<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+											<?php echo $productImage->toHtml(); ?>
+									</a>
+
+								</div>
+								
+								<div class="product details product-item-details box-info-list">
+                                	<?php if($store_id == 2){?>
+                                        <div class="wsale">
+                                            <div class="wsale-inner">
+                                            <a href="#"><img class="img" src="<?php echo $this->getViewFileUrl('images/whole.png') ?>" /></a>
+                                            <ul>
+                                                <li>dddddd</li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                    <?php }?>
+									<?php
+										$_productNameStripped = $block->stripTags($_product->getName(), null, true);
+									?>
+									<h2 class="product name product-item-name product-name">
+                                    	<?php if($_product->getAttributeText('assured')=="Yes"):?>
+                                    		<div class="sp_assured_new"><img src="<?php echo $this->getViewFileUrl('images/Hallal-Assured-final.png') ?>" ></div>
+                                		<?php endif;?>
+                                        <?php if($store_id == 2){?>
+                                    <div class="wsale">
+                                        <div class="wsale-inner">
+                                        <a href="#"><img class="img" src="<?php echo $this->getViewFileUrl('images/whole.png') ?>" /></a>
+                                        <ul>
+                                            <li>dddddd</li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                <?php }?>
+										<a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+											<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+										</a>
+                                        
+									</h2>
+									<?php
+									$storeId = '1'; //Store ID
+								$product_id = $_product->getId();
+								$productFactory = $objectManager->get('\Magento\Catalog\Model\ProductFactory');
+								$product = $productFactory->create()->setStoreId($storeId)->load($product_id);
+									?>
+									<?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+									<?php if($store_id==2){?>
+										<?php if($product->getPrice()=="0"){
+											$regularPrice = $product->getPriceInfo()->getPrice('regular_price');
+											$newprice =  $regularPrice->getMinRegularAmount(); 
+										}else{
+											$newprice = $product->getPrice();
+										}
+										 $ab1 = (string)$newprice;
+                                         $newprice = number_format((float)$ab1, 2, '.', '');
+											?>
+                                    <div class="whole-gride-price">
+                                        <span class="retail-price">Retail Price : <?php echo $currency_code.$newprice?></span>
+                                        <span class="whole-price">Wholesale Price : <span class="whole-big"><?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?></span><!--<span class="whole-small">/Piece</span>--></span>
+                                    </div>
+                                    <?php }?>
+                                    <?php if($store_id==2){
+									$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+								$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+								if(!empty($result1)){
+								    foreach($result1 as $row1){
+								        $seller_id = $row1['seller_id'];
+								    }
+								    $result2 = $connection->fetchAll("SELECT * FROM marketplace_userdata where seller_id='".$seller_id."'");
+								    foreach($result2 as $row2){
+								        $shopname = $row2['shop_url'];
+								    }
+								}else{
+								    $shopname = "Halalhub";
+								}  	
+									?>
+                                    
+                                    <div class="seller_name">
+                                        <?php echo "<span>Seller / Company :</span> ".$shopname?>
+                                    </div>
+                                    
+                                    <div class="seller_hilight">
+                                        <?php echo "<span>Highlights :</span>".$_product->getProductHighlight();?>
+                                    </div>
+                                    
+                                    <div class="moq-holder">
+                                        <div class="moq">MOQ : <?php echo $_product->getWholesellerMinQty()?></div>
+                                        <?php if($_product->getCustomBranding()=="34"){?>
+                                        <a href="#" class="moq2">Custom Branding</a>
+                                        <?php }?>
+                                    </div>
+                                    <?php if($_product->getCountryOfManufacture()=="IN"){
+                                    		$img = "india.png";
+                                    	}else if($_product->getCountryOfManufacture()=="SG"){
+                                    		$img = "singapore.png";
+                                    	}else if($_product->getCountryOfManufacture()=="ID"){
+                                    		$img = "indonesia.png";
+                                    	}else if($_product->getCountryOfManufacture()=="MY"){
+                                    		$img = "malaysia.png";
+                                    	}else if($_product->getCountryOfManufacture()=="TH"){
+                                    		$img = "thailand.png";
+                                    	}else{
+                                    		$img = "india.png";
+                                    	}
+
+                                    		?>
+                                    		 <?php
+									 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+									$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+									$totalincome = 0;
+									$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+									if(!empty($result1)){
+									    foreach($result1 as $row1){
+									        $seller_id = $row1['seller_id'];
+									        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($seller_id);
+											$customerEmail = $customerObj->getEmail();
+									    }
+									     $result2 = $connection->fetchAll("SELECT * FROM marketplace_saleslist where seller_id='".$seller_id."'");
+									     foreach($result2 as $row2){
+									         $totalincome = $totalincome + $row2['magepro_price'];
+									     }
+									}else{
+									    $seller_id = 0;
+									    $totalincome = 0;
+									    $customerEmail = "halalglobalhub@gmail.com";
+									}   
+									  $result4 = $connection->fetchAll("SELECT * FROM indglobal_seller where customer_id='".$seller_id."'");
+									  if(!empty($result4)){
+									  	foreach($result4 as $row4){
+									          $sellertype = $row4['business_category'];
+									          //echo '>>> '.$totalincome;
+									      }    
+									  }else{
+									  	$sellertype = "Admin";
+									  }                              
+									?>
+                                    <div class="sp-top-section">
+
+                                    	<div class="sp-manp-section"><span>Types of seller:</span> <?php echo $sellertype?> <span class="con-icon"><img class="img" src="<?php echo $this->getViewFileUrl('images')."/".$img ?>" /></span></div>
+                                        <?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+                                        
+                                        <div class="sp-com"><a class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare113')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button"><img class="img" src="<?php echo $this->getViewFileUrl('images/com-whole.png') ?>" /> Add To Compare</a></div>
+                                        
+
+                                    </div>
+                                    <?php
+									 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+									$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+									$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+									if(!empty($result1)){
+									    foreach($result1 as $row1){
+									        $seller_id = $row1['seller_id'];
+									        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($seller_id);
+											$customerEmail = $customerObj->getEmail();
+									    }
+									    // $result2 = $connection->fetchAll("SELECT * FROM marketplace_userdata where seller_id='".$seller_id."'");
+									    // foreach($result2 as $row2){
+									    //     $shopname = $row2['shop_url'];
+									    // }
+									}else{
+									    $seller_id = 0;
+									    $customerEmail = "halalglobalhub@gmail.com";
+									}                                       
+									?>
+                                    
+                                    <?php
+									 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+									$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+									$totalincome = 0;
+									$result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$_product->getId()."'");
+									if(!empty($result1)){
+									    foreach($result1 as $row1){
+									        $seller_id = $row1['seller_id'];
+									        $customerObj = $objectManager->create('Magento\Customer\Model\Customer')->load($seller_id);
+											$customerEmail = $customerObj->getEmail();
+									    }
+									     $result2 = $connection->fetchAll("SELECT * FROM marketplace_saleslist where seller_id='".$seller_id."'");
+									     foreach($result2 as $row2){
+									         $totalincome = $totalincome + $row2['magepro_price'];
+									     }
+									}else{
+									    $seller_id = 0;
+									    $totalincome = 0;
+									    $customerEmail = "halalglobalhub@gmail.com";
+									}   
+									 $result3 = $connection->fetchAll("SELECT * FROM indglobal_sellerrating where title <= '".$totalincome."' AND author >= '".$totalincome."'");
+									      foreach($result3 as $row3){
+									          $totalincome = $row3['rating'];
+									          //echo '>>> '.$totalincome;
+									      }                                  
+									?>
+									<input type="hidden" value="<?php echo $customerEmail?>" class="seller_id">
+                                    <div class="sp-whole-float-section">
+                                    	<input type="hidden" value="<?php echo $customerEmail?>" class="seller_id">
+                                    	<div class="con-supp"><a class="sendmail" href="#" data-toggle="modal" data-target="#contactModal">Contact Supplier</a></div>
+                                        <div class="con-member"><span><img class="img" src="<?php echo $this->getViewFileUrl('images/com-member.png') ?>" /></span>Gold Membership</div>
+                                        <div class="con-rating">
+                                        	<div class="sp-3rating" data-id="<?php echo $totalincome; ?>"><img class="img" src="<?php echo $this->getViewFileUrl('images/3star.png') ?>"></div>
+                                            <div class="sp-transaction">Transaction Value</div>
+                                        </div>
+                                    </div>
+                                    <?php }?>
+                                    <?php if($store_id!=2){?>
+									<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
+									<?php }?>
+									<?php echo $block->getProductDetailsHtml($_product); ?>
+
+									<div class="product-item-inner">
+										<?php if ($showDescription):?>
+											<div class="product description product-item-description">
+											
+												<?php 
+												  echo  $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description');
+		
+												?>
+												
+												<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>"
+												   class="action more"><?php /* @escapeNotVerified */ echo __('Learn More') ?></a>
+											</div>
+										<?php endif; ?>
+									</div>
+									
+									<div class="bottom-action">
+										<?php if($_config->getAdvanced('show_addtocart_button')){?>
+											<?php if ($_product->isSaleable()): ?>
+												<?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                                
+												
+                                            <?php if($_product->getTypeId()=="configurable"){?>
+											 <a href="<?php echo $_product->getProductUrl()?>" class="confirmation btn-cart"><span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span></a>
+											<?php }else{?>
+												<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+													<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+													<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+													<?php echo $block->getBlockHtml('formkey')?>
+													<button type="submit" title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>" class="action btn-action primary tocart btn-cart">
+														<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+													</button>
+												</form>
+												<?php }?>
+											<?php else: ?>
+												<?php if ($_product->getIsSalable()): ?>
+													<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+												<?php else: ?>
+													<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+												<?php endif; ?>
+											<?php endif; ?>
+										<?php } ?>
+										
+										<div class="add-to-links" data-role="add-to-links" class="actions-secondary">
+											<?php if($_config->getAdvanced('show_wishlist_button')){?>
+												<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+												<?php if($p==1){?>
+													<a href="#" class="action towishlist btn-action link-wishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"  aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_product); ?>' data-action="add-to-wishlist"  role="button">
+														<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+													</a>
+													<?php }else{?>
+														<a href="#" class="action towishlist btn-action link-wishlist notloginwishlist" title="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>"  aria-label="<?php echo $block->escapeHtml(__('Add to Wish List')); ?>" role="button">
+											<span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span></a>
+											<?php }?>
+												<?php endif; ?>
+											<?php } ?>
+											
+											
+										</div>
+                                        
+                                        <?php if($_config->getAdvanced('show_compare_button')){?>
+												<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+										<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
+											<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+										</a>
+												<?php } ?>
+                                                
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				<?php endforeach; ?>
+			</ol>
+		<?php } ?>
+    </div>
+	<div class="toolbar-bottom">
+    <?php echo $block->getToolbarHtml() ?>
+	</div>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+            </div>
+    
+</section>
+
+<script type="text/javascript">
+	require([
+		'jquery',
+		'spowl',
+		'easyTabs',
+		'sptooltips'
+	], function ($) {
+		//alert(1);
+		$('.sp-tips').tooltipster();
+		////////////////////////
+		var showChar = 100;
+		var ellipsestext = "...";
+		var moretext = "Lear More";
+		var lesstext = "Lear Less";
+		$('.product-item-description').each(function() {
+			var content = $(this).find('p').html();
+			
+			if(content == undefined){
+				return;
+			}
+			//alert(content);
+			if(content.length > showChar) {
+	
+				var c = content.substr(0, showChar);
+				var h = content.substr(showChar-1, content.length - showChar);
+	
+				var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="#" class="morelink">' + moretext + '</a></span>';
+	
+				$(this).html(html);
+				
+				
+			}
+	
+		});
+	
+		//$(".morelink").click(function(event){
+		$(document).on('click', '.morelink', function(event){
+			//alert(123);
+			event.preventDefault();
+			if($(this).hasClass("less")) {
+				$(this).removeClass("less");
+				$(this).html(moretext);
+			} else {
+				$(this).addClass("less");
+				$(this).html(lesstext);
+			}
+			$(this).parent().prev().toggle();
+			$(this).prev().toggle();
+			return false;
+		});
+		////////////////////////
+		var cata_carousel = $('#cata-carousel').owlCarousel({
+		  loop: false,
+		  margin: 0,
+		  responsiveClass: true,
+		  nav: true,
+		  autoplay:false,
+		  responsive: {
+			0: {
+			  items: 1,
+			},
+			600: {
+			  items: 3,
+			},
+			1000: {
+			  items: 6,
+			  dots:false,
+			  
+			}
+		  }
+		}); 
+		////
+		$('.sp-owl-bt#pro-prev').click(function(event) {
+			event.preventDefault();
+			cata_carousel.trigger('prev.owl.carousel');
+		})
+		$('.sp-owl-bt#pro-next').click(function(event) {
+			event.preventDefault();
+			cata_carousel.trigger('next.owl.carousel');
+		}) 
+		///////
+		$('.sp-3rating').each(function( index ) {
+			var starCount = $(this).attr('data-id');
+			var starpic = 'http://halalglobalhub.com/pub/static/version1517822768/frontend/Sm/emarket/en_US/images/'+starCount+'star.png';
+			$(this).find('img').attr('src',starpic)
+			
+		});
+		//////
+		var brand_carousel = $('#brand-carousel').owlCarousel({
+		  loop: false,
+		  margin: 22,
+		  responsiveClass: true,
+		  nav: true,
+		  autoplay:false,
+		  responsive: {
+			0: {
+			  items: 1,
+			},
+			480: {
+			  items: 2,
+			},
+			600: {
+			  items: 4,
+			},
+			1000: {
+			  items: 7,
+			  dots:false,
+			  
+			}
+		  }
+		}); 
+		////
+		$('.sp-owl-bt#band-prev').click(function(event) {
+			event.preventDefault();
+			brand_carousel.trigger('prev.owl.carousel');
+		})
+		$('.sp-owl-bt#band-next').click(function(event) {
+			event.preventDefault();
+			brand_carousel.trigger('next.owl.carousel');
+		}) 
+		//////
+		$('.col2-layout .category-product.products-grid .item.sp-wholeseller').each(function( i ) {
+			//alert('1');
+			if ($(this).find('.minimal-price-link').length > 0 ) {
+				//alert('Found with Length bigger then Zero');
+				var html = $(this).find('.minimal-price-link').html();
+				var href = $(this).find('.minimal-price-link').attr('href');
+				$(this).find('.wsale .wsale-inner ul li').html(html);
+				$(this).find('.wsale').css({'display':'block'});
+			}
+		});
+		$('.notloginwishlist1').click(function(){
+			//alert("Please Login to add item to wishlist");
+			if($("#sp-infos").length > 0) {
+			  //it doesn't exist
+			  $('#sp-infos').remove();
+			}
+			var ftop = $(window).scrollTop()-60;
+			   var gettop = $(window).scrollTop()+260;
+			   //alert(ftop);
+			   $('body').prepend('<div id="sp-infos" style="top:'+gettop+'px">Please Login to add item to wishlist</div>');
+			   $( "#sp-infos" ).animate({
+				top: gettop
+			  }, 500, function() {
+				  //alert("done");
+				  setTimeout(function(){ removeArertPop(); }, 3000);
+				// Animation complete.
+			  });
+		})
+		function removeArertPop(){
+			var ftop = $(window).scrollTop()-60;
+			$( "#sp-infos" ).animate({
+				top: ftop,
+				opacity:0
+			}, 500, function() {
+				// Animation complete.
+				$('#sp-infos').remove();
+			});
+			
+		}
+		
+		$('.confirmation').on('click', function (event) {
+			event.preventDefault();
+			var geturl = $(this).attr('href');
+			$.confirm({
+				icon: '',
+				title: '',
+				content: 'Please select product type/attribute to buy this product.',
+				theme: 'bootstrap',
+				closeIcon: true,
+				animation: 'scale',
+				type: 'green',
+				buttons: {
+					cancel: function () {
+						//$.alert('you clicked on <strong>cancel</strong>');
+					},
+					'Proceed': function () {
+						//alert('you clicked on <strong>cancel</strong>');
+						window.location.href = geturl;
+					}
+				}
+				
+			});
+		});
+		
+		
+	});
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+	$(document).ready(function() {
+		var b = <?php echo $_productCollection->count();?>;
+		var a = "Showing " + b + " products";
+		$('.procount').text('');
+		$('.procount').text(a);
+	});
+	
+});
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+	$("#sorter option[value='price']").remove();
+	$("#sorter option[value='position']").text("Newest");
+    $("#sorter").append('<option value="price&product_list_dir=asc">Low to High</option>');
+    $("#sorter").append('<option value="price&product_list_dir=desc">High to Low</option>');
+    //$("#country").trigger('change');
+	$(document).ready(function() {
+		$('.page').click(function(){
+			var b = <?php echo $_productCollection->count();?>;
+			var a = "Showing " + b + " products";
+			$('.procount').text('');
+			$('.procount').text(a);
+		})
+		
+	});
+	
+});
+</script>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 PBMAGE. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+        <script src="Pbmage_AttributeManager::js/attribute.js" />
+    </head>
+    <body>
+        <referenceContainer name="form.additional.info">
+            <block class="Pbmage\AttributeManager\Block\Customer\Attribute" name="pbmage_additional_info_customer" template="Pbmage_AttributeManager::additionalinfocustomer.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Embitel_Slider::slider" title="Slider" module="Embitel_Slider" sortOrder="30" resource="Embitel_Slider::slider"/>
+        <add id="Embitel_Slider::slider_manage" title="All Items" module="Embitel_Slider" sortOrder="10" parent="Embitel_Slider::slider" action="slider/index/" resource="Embitel_Slider::manage"/>
+    </menu>
+</config>

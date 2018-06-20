@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 PBMAGE. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="pbmage_category_attribute_add_update_after">
+        <observer name="pbmage_category_attribute" instance="Pbmage\AttributeManager\Observer\CategoryAttributeAddUpdateAfter" />
+    </event>
+</config>

@@ -1,0 +1,167 @@
+
+// HOME GENERAL
+.policy-home1 {
+  border: 1px solid #ebebeb;
+  padding: 0px 20px;
+  li.item {
+    border-bottom: 1px solid #ebebeb;
+    padding:25px 0 18px 55px;
+    position: relative;
+   &:before{
+      display:inline-block;
+      content: "";
+      width: 70px;
+      height: 50px;
+      background: url('../images/icon-policy.png') no-repeat 0 0 ;
+      position: absolute;
+      left: 0;
+      top:25px;
+    }
+    h3 {
+      font-size: 100%;
+      text-transform: uppercase;
+      a{color: #222222;}
+    }
+    p{
+      color: #999999;
+      font-size: 100%;
+    }
+    &:hover {
+      h3 a{
+      color:#ff3c20;
+      font-weight: bold;
+     }
+    }
+    &.item1{
+      &:before{
+         background-position: -15px -407px;
+      }
+      /*&:hover:before{
+         background-position: -15px -477px;
+      }*/
+    }
+    &.item2{
+      &:before{
+         background-position:-15px -269px;
+      }
+      /*&:hover:before{
+        background-position:-15px -338px;
+      }*/
+    }
+     &.item3{
+      &:before{
+         background-position:-15px -204px;
+      }
+      /*&:hover:before{
+        background-position:-15px -139px;
+      }*/
+    }
+     &.item4{
+        &:before{
+          background-position:-15px -15px;
+      }
+      /*&:hover:before{
+        background-position: -15px -77px;
+      }*/
+    }
+    &:last-child{
+      border: 0px;
+    }
+  }
+}
+.full-content{
+  margin: 0 auto;
+}
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+a.banner {
+  position: relative !important;
+  background: #fff;
+  overflow: hidden;
+  display: block;
+ &:before {
+      position: absolute;
+      top: 0;
+      left: -85%;
+      z-index: 2;
+      display: block;
+      content: '';
+      width: 50%;
+      height: 100%;
+      background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+      -webkit-transform: skewX(-25deg);
+      transform: skewX(-25deg); 
+    }
+
+    &:hover{
+      &:before{
+       -webkit-animation: shine .75s;
+       animation: shine .75s;
+      }
+    }
+}
+
+
+//RESPONSIVE GENERAL
+
+@media (min-width: 1200px) {
+ 
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+ 
+}
+
+@media (min-width: 767px) {
+.ltabs-current-select {
+  display: none;
+}
+
+}
+
+@media (max-width:480px) {
+
+  .banner {
+    width: 100%;
+    img{width: 100%;}
+  }
+}
+.mr10 {
+  margin-bottom: 10px;
+}
+.mr20 {
+  margin-bottom: 20px;
+}
+.mr25 {
+  margin-bottom: 25px;
+}
+.mr27 {
+  margin-bottom: 27px;
+}
+.mr30 {
+  margin-bottom: 30px;
+}
+.mr35 {
+  margin-bottom: 35px;
+}
+.mr40 {
+  margin-bottom: 30px;
+}
+.mr50 {
+  margin-bottom: 50px;
+}
+
+

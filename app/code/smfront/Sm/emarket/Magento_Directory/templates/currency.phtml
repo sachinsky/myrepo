@@ -1,0 +1,48 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Currency switcher
+ *
+ * @see \Magento\Directory\Block\Currency
+ */
+?>
+<?php if ($block->getCurrencyCount() > 1): ?>
+<?php
+$imgpath = "<img src=http://www.babysensory.com/content/images/flags/in.gif>";
+$imgpath1 = "<img src=http://halalglobalhub.com/pub/media/flag/India.jpg>";
+$imgpath2 = "<img src=http://halalglobalhub.com/pub/media/flag/Thailand.jpg>";
+$imgpath3 = "<img src=http://halalglobalhub.com/pub/media/flag/Singapore.jpg>";
+$imgpath4 = "<img src=http://halalglobalhub.com/pub/media/flag/Malasya.jpg>";
+$imgpath5 = "<img src=http://halalglobalhub.com/pub/media/flag/Indonesia.jpg>";
+?>
+<?php $currencies = $block->getCurrencies(); ?>
+<?php $currentCurrencyCode = $block->getCurrentCurrencyCode(); ?>
+<?php $id = $block->getIdModifier() ? '-' . $block->getIdModifier() : ''?>
+<div class="switcher currency switcher-currency vvvv" id="switcher-currency<?php /* @escapeNotVerified */ echo $id?>">
+    <strong class="label switcher-label"><span><?php /* @escapeNotVerified */ echo __('Currency') ?></span></strong>
+    <div class="switcher-options ddd">
+        <div class="action toggle switcher-trigger" id="switcher-currency-trigger<?php /* @escapeNotVerified */ echo $id?>">
+            <strong class="language-<?php echo $block->escapeHtml($block->getCurrentCurrencyCode()) ?>">
+                <span><?php /* @escapeNotVerified */ if($block->escapeHtml($currentCurrencyCode)=="INR") {echo $imgpath1;}else if($block->escapeHtml($currentCurrencyCode)=="MYR"){echo $imgpath4;}else if($block->escapeHtml($currentCurrencyCode)=="IDR"){echo $imgpath5;}else if($block->escapeHtml($currentCurrencyCode)=="SGD"){echo $imgpath3;}elseif($block->escapeHtml($currentCurrencyCode)=="THB"){echo $imgpath2;}?><?php echo " ".$block->escapeHtml($currentCurrencyCode) ?></span>
+            </strong>
+        </div>
+        <ul class="sp-dropdown">
+            <?php foreach ($currencies as $_code => $_name): ?>
+                <?php if ($_code != $currentCurrencyCode): ?>
+                    <li class="currency-<?php /* @escapeNotVerified */ echo $_code ?> switcher-option">
+                        <a href="#" data-post='<?php /* @escapeNotVerified */ echo $block->getSwitchCurrencyPostData($_code); ?>'><?php /* @escapeNotVerified */ if($_name=="Indian Rupee") {echo $imgpath1;}else if($_name=="Malaysian Ringgit"){echo $imgpath4;}else if($_name=="Indonesian Rupiah"){echo $imgpath5;}else if($_name=="Singapore Dollar"){echo $imgpath3;}elseif($_name=="Thai Baht"){echo $imgpath2;}?> <?php /* @escapeNotVerified */ echo $_name ?></a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<?php endif; ?>

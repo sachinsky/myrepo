@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Embitel_Adminhtml::admin">
+                <resource id="Embitel_Bannerslide::bannerslide" title="Bannerslide" sortOrder="40">
+                    <resource id="Embitel_Bannerslide::manage" title="Bannerslide Module" sortOrder="10">
+						<resource id="Embitel_Bannerslide::save" title="Save Bannerslide" sortOrder="10" />
+                        <resource id="Embitel_Bannerslide::news_delete" title="Delete Bannerslide" sortOrder="20" />
+					</resource>
+                </resource>
+                <resource id="Embitel_Adminhtml::stores">
+                    <resource id="Embitel_Adminhtml::stores_settings">
+                        <resource id="Embitel_Adminhtml::config">
+                            <resource id="Embitel_Bannerslide::config_bannerslide" title="Bannerslide Section" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

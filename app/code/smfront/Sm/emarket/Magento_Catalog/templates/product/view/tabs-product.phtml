@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Gallery
+ */
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');       
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+$_config = $this->helper('Sm\Emarket\Helper\Data');
+
+
+ 
+?>
+<?php if($_config->getProductDetail('show_related') || $_config->getProductDetail('show_upsell')) :?>			
+			<div class="content-product-detail">
+				 <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active">
+				    <a href="#related" aria-controls="related" role="tab" data-toggle="tab">
+							<span class="detail-title"><?php echo __('Similar Products')?></span>
+				    </a>
+				    </li>
+				    <!-- <li role="presentation">
+					    <a href="#upsell" aria-controls="upsell" role="tab" data-toggle="tab">
+							<span class="detail-title"><?php echo __('Upsell Products')?></span>
+					    </a>
+				    </li>	 -->	  
+				  </ul>
+				 <div class="tab-content">
+				    <div role="tabpanel" class="tab-pane active" id="related"><?php echo $block->getChildHtml('catalog.product.related'); ?></div>
+				    <div role="tabpanel" class="tab-pane" id="upsell"><?php echo $block->getChildHtml('product.info.upsell'); ?></div>
+			   </div>
+			</div>
+		<?php endif; ?>
+		<?php if($store_id!=2){?>
+		<?php echo $this->getLayout()->createBlock("Magento\Reports\Block\Product\Widget\Viewed")->setDisplayType("recently.view.products")->setProductsCount("5")->setTemplate("widget/viewed/content/viewed_grid.phtml")->toHtml(); ?>
+		<?php }?>

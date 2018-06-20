@@ -1,0 +1,180 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Magento\Catalog\Block\Product\Compare\ListCompare */
+?>
+<?php $_total = $block->getItems()->getSize();
+?>
+<?php if ($_total): ?>
+    <a href="#" class="action print" title="<?php /* @escapeNotVerified */ echo __('Print This Page') ?>">
+        <span><?php /* @escapeNotVerified */ echo __('Print This Page') ?></span>
+    </a>
+        <div class="table-wrapper comparison">
+            <table class="table sp-compare-table" id="product-comparison"
+                data-mage-init='{"compareList":{
+                    "windowPrintSelector":".action.print",
+                    "productsInRow":"5",
+                    "selectors":{
+                        "productAddToCartSelector":"button.action.tocart"}
+                }}'>
+                <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Compare Products') ?></caption>
+                <thead>
+                <tr>
+                    <?php $_i = 0 ?>
+                    <?php foreach ($block->getItems() as $_item): ?>
+                        <?php if ($_i++ == 0): ?>
+                            <th scope="row" class="cell remove"><span><?php /* @escapeNotVerified */ //echo __('Remove Product') ?></span></th>
+                        <?php endif; ?>
+                        <td class="cell remove product">
+                            
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <?php $_i = 0; ?>
+                    <?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+                    <?php /** @var $_item \Magento\Catalog\Model\Product */ ?>
+                    <?php foreach ($block->getItems() as $_item): ?>
+                        <?php if ($_i++ == 0): ?>
+                            <th scope="row" class="cell product">
+                            	<div class="full-img"><img class="img" src="<?php echo $this->getViewFileUrl('images/demo-product.jpg') ?>" /></div>
+                                <h4 class="make-bottom">Details</h4>
+                            </th>
+                        <?php endif; ?>
+                        <td data-th="<?php echo $block->escapeHtml(__('Product')); ?>" class="cell product item info">
+                         <div class="item-inner">
+                          <div class="box-image">
+                          	<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');?>
+                            <a href="#" data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataRemove($_item); ?>'
+                               class="delete" title="<?php /* @escapeNotVerified */ echo __('Remove Product') ?>">
+                                <span><?php /* @escapeNotVerified */ echo __('X') ?></span>
+                            </a>
+                          	<div class="sp_assured_new"><img src="<?php echo $this->getViewFileUrl('images/Hallal-Assured-final.png') ?>"></div>
+                            <a class="product-item-photo" href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" title="<?php /* @escapeNotVerified */ echo $block->stripTags($_item->getName(), null, true) ?>">
+                                <?php echo $block->getImage($_item, 'product_comparison_list')->toHtml(); ?>
+                            </a>
+                         </div>
+                         <div class="box-info">
+                            <div class="product-item-name product-name">
+                                <a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" title="<?php /* @escapeNotVerified */ echo $block->stripTags($_item->getName(), null, true) ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_item, $_item->getName(), 'name') ?>
+                                </a>
+                            </div>
+                           <?php echo $block->getReviewsSummaryHtml($_item, 'short') ?>
+                            <?php /* @escapeNotVerified */ echo $block->getProductPrice($_item, '-compare-list-top') ?>
+                            <div class="product-item-actions bottom-action">
+                               
+                                    <?php if ($_item->isSaleable()): ?>
+                                        <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Product\Compare')->getAddToCartUrl($_item); ?>" method="post">
+                                            <?php echo $block->getBlockHtml('formkey')?>
+                                            <button type="submit" class="action btn-cart tocart primary">
+                                                <span><?php /* @escapeNotVerified */ echo __('Add to Cart'); ?></span>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <?php if ($_item->getIsSalable()): ?>
+                                            <div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+                                        <?php else: ?>
+                                            <div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                               
+                                <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()) : ?>
+                                   
+                                        <a href="#" data-post='<?php /* @escapeNotVerified */ echo $block->getAddToWishlistParams($_item); ?>' class="action towishlist btn-action link-wishlist" data-action="add-to-wishlist">
+                                            <span><?php /* @escapeNotVerified */ echo __('Add to Wish List') ?></span>
+                                        </a>
+                                    
+                                <?php endif; ?>
+                            </div>
+                            </div>
+                            </div>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                </tbody>
+                <tbody class="make-color">
+                <?php foreach ($block->getAttributes() as $_attribute): ?>
+                <?php if($_attribute->getAttributeCode()=="description"){
+                     $ab = "classdesc";
+                     }else{$ab="";}
+                    ?>
+                    <tr class="<?php echo $ab?>">
+                        <?php $_i = 0 ?>
+                        <?php foreach ($block->getItems() as $_item): ?>
+                            <?php if ($_i++ == 0): ?>
+                                <th scope="row" class="sp-middle">
+                                    <span class="attribute label">
+                                        <?php echo $block->escapeHtml($_attribute->getStoreLabel() ? $_attribute->getStoreLabel() : __($_attribute->getFrontendLabel())) ?>
+                                    </span>
+                                </th>
+                            <?php endif; ?>
+                            <td class="attribute sp-middle">
+                                <div class="attribute value">
+                                    <?php switch ($_attribute->getAttributeCode()) {
+                                        case "price": ?>
+                                            <?php
+                                                /* @escapeNotVerified */ echo $block->getProductPrice(
+                                                    $_item,
+                                                    '-compare-list-' . $_attribute->getCode()
+                                                )
+                                            ?>
+                                            <?php break;
+                                        case "small_image": ?>
+                                            <?php $block->getImage($_item, 'product_small_image')->toHtml(); ?>
+                                            <?php break;
+                                        default: ?>
+                                        <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_item, $block->getProductAttributeValue($_item, $_attribute), $_attribute->getAttributeCode()) ?>
+                                        <?php break;
+                                    } ?>
+                                </div>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if (!$block->isRedirectToCartEnabled()) : ?>
+            <script type="text/x-magento-init">
+            {
+                "[data-role=tocart-form]": {
+                    "catalogAddToCart": {}
+                }
+            }
+            </script>
+        <?php endif; ?>
+<?php else: ?>
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $store_id = $storeManager->getStore()->getStoreId();
+    $redirect = $objectManager->get('\Magento\Framework\App\Response\Http');
+    $redirect->setRedirect($this->getBaseUrl());
+    ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('You have no items to compare.') ?></div></div>
+<?php endif; ?>
+<script language="javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+       var pw = $('.table-wrapper.comparison').innerWidth();
+	   //product-comparison
+	   var cw = $('.table-wrapper.comparison #product-comparison').innerWidth();
+	   //alert(pw+', '+cw);
+	   if(cw > pw){
+		   $('.table-wrapper.comparison').css({'overflow-x':'scroll'});
+	   }
+       // alert(1);
+        $('.classdesc').insertAfter($('.make-color tr:last'));
+        
+    });
+    
+});
+</script>

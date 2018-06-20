@@ -1,0 +1,16 @@
+
+html {
+    font-family: 'Roboto Condensed', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+.header-style-1 .header-top {
+	border: none !important;
+	background: #263c4c !important;
+}
+.header-style-1 .header-bottom {
+	background: #ebebeb !important;
+}
+.header-style-1 .header-bottom .sidebar-megamenu .megamenu-content-sidebar .btn-megamenu {
+	background-color: #f15b2b !important;
+}

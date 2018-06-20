@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Embitel_Testimonial::parent" title="Testimonial" module="Embitel_Testimonial" sortOrder="100" resource="Embitel_Testimonial::parent"/>
+        <add id="Embitel_Testimonial::index" title="Testimonial Index" module="Embitel_Testimonial" sortOrder="10" action="testimonial/index" resource="Embitel_Testimonial::index" parent="Embitel_Testimonial::parent"/>
+		
+    </menu>
+</config>

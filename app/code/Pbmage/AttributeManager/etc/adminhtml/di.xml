@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 PBMAGE. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">    
+    <type name="Magento\Ui\DataProvider\EavValidationRules">
+        <plugin name="customEavValidationRules" type="Pbmage\AttributeManager\Model\Plugin\EavValidationRules"/>
+    </type>
+    <type name="Magento\Eav\Model\Entity\Type">
+        <plugin name="customEavAttributeCollection" type="Pbmage\AttributeManager\Model\Plugin\EavAttributeCollection"/>
+    </type>
+    <type name="Magento\Customer\Ui\Component\ColumnFactory">
+        <plugin name="customGridColumnValidation" type="Pbmage\AttributeManager\Model\Plugin\GridColumnValidation"/>
+    </type>
+    <type name="Magento\Eav\Model\Entity\Attribute\Backend\AbstractBackend">
+        <plugin name="customValidateAttribute" type="Pbmage\AttributeManager\Model\Plugin\AbstractBackend"/>
+    </type>
+</config>

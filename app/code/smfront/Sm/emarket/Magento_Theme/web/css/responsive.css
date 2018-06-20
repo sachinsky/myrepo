@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media (min-width: 1280px) {
+	.container{
+		max-width:940px;
+	}
+}
+
+@media screen and (max-width:767px){
+	.plans-outer-table{
+		padding-bottom:15px;
+	}
+	.banner-info{
+		padding:30px 0;
+		background:rgba(30,39,54,0.8)
+	}
+	.banner-info h2{
+		font-size:36px;
+		margin-bottom:40px;
+	}
+	.banner-info p{
+		padding-left:20px;
+		font-size: 16px;
+	}
+	.half-image-right,
+	.half-image-left{
+		width:100%;
+		padding:0;
+	}
+	.half-image-right,
+	.full-image-block{
+		display:block;
+	}
+	
+	.full-image-block h2{
+		position:static;
+		text-align:center;
+		width:100%;
+		font-size:24px;
+		color:#000;
+		margin-top:10px;
+	}
+	.full-image-block a{
+		left:50%;
+		right:inherit;
+		bottom:20px;
+		transform:translateX(-50%);
+	}
+	.half-image-left h2{
+		font-size:24px;
+	}
+	.lower-info h3{
+		font-size:32px;
+	}
+	.half-image-right .white-info{
+		position:static;
+	}
+	.half-image-right .white-info .link-info{
+		margin:10px 0 0 0;
+	}
+	.containt-block{
+		height:auto;
+	}
+	.scroller-nav-block{
+		position:relative;
+		padding:0;
+		margin:15px 0;
+	}
+	#issues-next,
+	#issues-prev{
+		display:none;
+	}
+	.item-block span{
+		margin-top:-10px;
+	}
+	.item-block.active span{
+		transform:rotate(180deg);
+	}
+	.item-block.active > ul{
+		display:block;
+		position:relative;
+		top:0;
+	}
+	.item-block > a{
+		border:none;
+	}
+	#collectionTab .resp-tabs-list{
+		display:none;
+	}
+	.same-div{
+		display:inline-block;
+	}
+	.thirty-image-right,
+	.half-image-left.more-half{
+		width:100%;
+	}
+	/*.resp-tabs-container img{
+		width:100%;
+		height:auto;
+		display:inline-block;
+	}*/
+	a.all-bt{
+		position:static;
+	}
+	.sports-menu{
+		display:block;
+	}
+	.sports-menu li{
+		width:50%;
+		text-align:center;
+	}
+	.sports-menu li a{
+		float:none;
+		display:inline-block;
+	}
+}
+@media screen and (max-width:380px){
+}
+@media screen and (max-width:320px){
+}

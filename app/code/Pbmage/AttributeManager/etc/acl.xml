@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 PBMAGE. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Pbmage_AttributeManager::pbmage" title="Pbmage" sortOrder="1">
+                    <resource id="Pbmage_AttributeManager::attribute_manager" title="Attribute Manager" sortOrder="1">
+                    	<resource id="Pbmage_AttributeManager::category_attribute" title="Category" sortOrder="1"/>
+                    	<resource id="Pbmage_AttributeManager::customer_attribute" title="Customer" sortOrder="2"/>
+                    	<resource id="Pbmage_AttributeManager::customer_address_attribute" title="Customer Address" sortOrder="3"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

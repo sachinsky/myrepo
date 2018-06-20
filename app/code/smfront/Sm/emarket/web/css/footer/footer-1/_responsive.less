@@ -1,0 +1,115 @@
+// RESPONSIVE FOOTER STYLE 1
+
+@media (min-width: 1920px) {
+
+.footer-container .newsletter-footer{
+  .inner-newletter {
+    width: 75%;
+  }
+  .inner-social{
+    width: 25%;
+    .socials-wrap ul .li-social a span.name-social {
+      display: inline-block !important;
+    }
+  }
+}
+ 
+}
+
+
+
+@media (min-width: 1200px) and (max-width: 1900px) {
+
+
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .footer-top{
+    .contact-footer {
+      width: 30%;
+    }
+    .categories-footer{
+      width: 45%;
+      .customer-ft, .categories-footer {
+           width: 50%;
+           .categories ul.links{
+              margin: 0px !important;
+              &:last-child {
+                display: none;
+              }
+            }
+      }
+    }
+  }
+  .footer-container .socials-wrap ul .li-social {
+    margin-left: 5px;
+  }
+   .footer-container .footer-block .footer-block-content.categories ul.links{
+    width: 100% !important;
+  }
+
+}
+
+@media (max-width: 991px){
+  .footer-container .socials-wrap {
+    text-align: left !important;
+  }
+  .footer-container .block-categories .footer-toplinks{
+    padding: 0px !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .payment-shipping{
+    clear: both;
+  }
+
+  .about-store,
+  .customer-services{
+    margin-bottom: 20px;
+  }
+
+
+}
+
+@media (max-width: 767px) {
+  .socials-wrap{
+    display: none!important;
+  }
+
+  .footer-block{
+    margin-bottom: 20px;
+  }
+
+  .contact-footer{
+    .footer-block{
+      margin-bottom: 0;
+    }
+  }
+
+  .footer-container .footer-bottom .footer-payment{
+    text-align: left;
+    padding-top: 10px;
+  }
+  .footer-container .newsletter-footer {
+    .title_block {
+      width: 100%;
+    }
+    .form.subscribe {
+      width: 100%;
+    }
+  } 
+}
+
+@media (max-width: 480px) {
+  .footer-container .footer-block .footer-block-content.categories ul.links{
+    width: 100% !important;
+  }
+  .socials-wrap{
+    display: none;
+  }
+  .footer-container .ads-footer ul.app-ft li {
+     margin: 0 8px 0 0;
+    width: 30%;
+    display: inline-block;
+    float: left;
+  }
+}

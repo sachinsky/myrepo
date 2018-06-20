@@ -1,0 +1,230 @@
+<div class="enquiry-title">
+	<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+				<h2>Enquiry Form</h2>
+        	</div>
+        </div>
+    </div>
+</div>
+<div class="enquiry-section">
+	<div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="col-sp-pic"><img class="img" src="<?php echo $this->getViewFileUrl('images/logo.png') ?>" /></div>
+            </div>
+            <div class="col-md-4">
+                
+                <div class="enquiry-form">
+        
+                    <form id="contact-form" action="<?php echo $block->getUrl('enquiry/index/saveenquiry')?>" method="post" role="form">
+                        <div class="form-group field-contactform-name required">
+                            <label class="control-label active" for="contactform-name">Name</label>
+                            <input id="contactform-name" class="form-control name" name="name" placeholder="Enter your name" aria-required="true" aria-invalid="true" type="text">
+                            <span class="namerror" style="color:red;display:none">Invalid Name.<span>
+                        </div>
+                        <div class="form-group field-contactform-contact required">
+                            <label class="control-label active" for="contactform-contact">Moblie Number</label>
+                            <input id="contactform-contact" class="form-control contact" name="contact" maxlength="11" placeholder="Enter your contact number" aria-required="true" type="text">
+                            <span class="conerror" style="color:red;display:none">Invalid Mobile Number.<span>
+                        </div>
+                        <div class="form-group field-contactform-email required">
+                            <label class="control-label active" for="contactform-email">Email</label>
+                            <input id="contactform-email" class="form-control email67" name="email" placeholder="Enter your email address" aria-required="true" type="text">
+                            <span class="emaerror" style="color:red;display:none">Invalid Email Id.<span>
+                        </div>
+                        <div class="form-group field-contactform-subject required">
+                            <label class="control-label active" for="contactform-subject">Subject</label>
+                            <input id="contactform-subject" class="form-control subject" name="subject" placeholder="Enter your subject" aria-required="true" type="text">
+                            <span class="suberror" style="color:red;display:none">Subject Should be required.<span>
+                        </div>
+                        <div class="form-group field-contactform-body required">
+                            <label class="control-label" for="contactform-body">Enquiries / Questions / Feedback</label>
+                            <textarea id="contactform-body" class="form-control msg" name="msg" rows="6" aria-required="true"></textarea>
+                            <span class="msgerror" style="color:red;display:none">Message Should be required.<span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="fine-print">
+                                All fields are required. We respect your privacy. We will only use the information you have given above to deal with your query. </div>
+                
+                        </div>
+                
+                        <div class="form-group">
+                            <button type="submit" class="submitbtn" name="contact-button">Submit</button>
+                        </div>
+                
+                    </form>
+                
+                </div>
+                
+            </div>
+            <div class="col-md-3">
+                <div class="contactWrap">
+                    <p>Need some assistance? The answer to your question could be right at your fingertips. Check our top Frequently Asked Questions (FAQ) below.<br><br>Still can't find what you're looking for?</p>
+                </div>
+                
+                <div class="contactWrap">
+                <h4>Contact Us</h4>
+                
+                <p>
+                    <b>International Phone Line</b><br>
+                    <a href="tel:+1(855)515-5211">+1(855)515-5211</a>
+                </p>
+                <p>
+                    <b>For indian Customer</b><br>
+                    <a href="tel:080-234130-99">080 -234130-99</a>
+                </p>
+                <p>
+                    <b>SEND AN E-MAIL</b><br>
+                    <a href="mailto:enquiry@halalglobalhub.com">enquiry@halalglobalhub.com</a>
+                </p>
+                
+                <p>
+                    <b>Our operating hours are from:</b><br>
+                    Monday - Friday:<br />
+                    9:00 - 21:00 (IST)<br /><br />
+                    Closed on public holiday’s
+                </p>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<SCRIPT TYPE="text/javascript">
+function Ispassword(password){
+    if(password.length<8){
+        return false;
+    }else{
+        return true;
+    }
+}
+function Isname(name){
+    var regex = /^[a-zA-Z\s]+$/;
+        if(!regex.test(name)) {
+           return false;
+        }else{
+           return true;
+        }
+}
+function Isemail(email){
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+           return false;
+        }else{
+           return true;
+        }
+}
+function Iscountry(country){
+    if(country==""){
+        return false;
+    }else{
+        return true;
+    }
+}
+function Ismobile(mobile){
+    if(jQuery.isNumeric(mobile)==true){
+      return true;
+    }else{
+      return false;
+    }
+}
+require(["jquery"],function($) {
+    $(document).ready(function() {
+        $('.submitbtn').click(function(){
+            var total = 0;
+            var a = $('.name').val();
+            if(Isname(a)==false){
+                $('.namerror').show();
+                total = total + 1;
+            }else{
+                $('.namerror').hide();
+            }
+            var a = $('.contact').val();
+            if(Ismobile(a)==false){
+                $('.conerror').show();
+                total = total + 1;
+            }else{
+                $('.conerror').hide();
+            }
+            var a = $('.email67').val();
+            if(Isemail(a)==false){
+                $('.emaerror').show();
+                total = total + 1;
+            }else{
+                $('.emaerror').hide();
+            }
+            var a = $('.subject').val();
+            if(Iscountry(a)==false){
+                $('.suberror').show();
+                total = total + 1;
+            }else{
+                $('.suberror').hide();
+            }
+            var a = $('.msg').val();
+            if(Iscountry(a)==false){
+                $('.msgerror').show();
+                total = total + 1;
+            }else{
+                $('.msgerror').hide();
+            }
+            if(total>0){
+                return false;
+            }
+        })
+        });
+    
+});
+</SCRIPT>
+<SCRIPT TYPE="text/javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+        $('.name').keyup(function(){
+            var a = $('.name').val();
+            if(a==""){
+              $('.namerror').hide();
+            }else{
+            if(Isname(a)==false){
+                $('.namerror').show();
+                total = total + 1;
+            }else{
+                $('.namerror').hide();
+            }
+        }
+        })
+        $('.contact').keyup(function(){
+            var a = $('.contact').val();
+            if(a==""){
+                 $('.conerror').hide();
+             }else{
+            if(Ismobile(a)==false){
+                $('.conerror').show();
+                total = total + 1;
+            }else{
+                $('.conerror').hide();
+            }
+        }
+        })
+        $('.email67').keyup(function(){
+            var a = $('.email67').val();
+           if(a==""){
+            $('.emaerror').hide();
+        }
+        })
+        $('.email67').change(function(){
+           var a = $('.email67').val();
+           if(a==""){
+            $('.emaerror').hide();
+        }else{
+            if(Isemail(a)==false){
+                $('.emaerror').show();
+                total = total + 1;
+            }else{
+                $('.emaerror').hide();
+            }
+        }
+        })
+    })
+})
+</SCRIPT>

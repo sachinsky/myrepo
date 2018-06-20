@@ -1,0 +1,47 @@
+<?php
+	$_helper = $this->helper('Sm\Emarket\Helper\Data');
+?>
+<div class="socials-wrap">
+	<div class="title-follow"><?php echo __('Share:');?></div>
+	<ul>
+		<?php if($_helper->getSocial('show_facebook')){ ?>
+		<li class="li-social facebook-social">
+			<a title="<?php echo $_helper->getSocial('facebook_name');?>" href="<?php echo $_helper->getSocial('facebook_url');?>" target="_blank"> 
+				<img class="img" src="<?php echo $this->getViewFileUrl('images/s1.png') ?>" /><span class="name-social"><?php echo $_helper->getSocial('facebook_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+		
+		<?php if($_helper->getSocial('show_twitter')){ ?>
+		<li class="li-social twitter-social">
+			<a title="<?php echo $_helper->getSocial('twitter_name');?>" href="<?php echo $_helper->getSocial('twitter_url');?>" target="_blank"> 
+				<img class="img" src="<?php echo $this->getViewFileUrl('images/s2.png') ?>" /><span class="name-social"><?php echo $_helper->getSocial('twitter_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+		
+		<?php if($_helper->getSocial('show_google')){ ?>
+		<li class="li-social google-social">
+			<a title="<?php echo $_helper->getSocial('google_name');?>" href="<?php echo $_helper->getSocial('google_url');?>" target="_blank"> 
+				<img class="img" src="<?php echo $this->getViewFileUrl('images/s3.png') ?>" /><span class="name-social"><?php echo $_helper->getSocial('google_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+		
+		<?php if($_helper->getSocial('show_linkedin')){ ?>
+		<li class="li-social linkedin-social">
+			<a title="<?php echo $_helper->getSocial('linkedin_name');?>" href="<?php echo $_helper->getSocial('linkedin_url');?>" target="_blank"> 
+				<img class="img" src="<?php echo $this->getViewFileUrl('images/s4.png') ?>" /><span class="name-social"><?php echo $_helper->getSocial('linkedin_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+		
+		<?php if($_helper->getSocial('show_pinterest')){ ?>
+		<li class="li-social pinterest-social">
+			<a title="<?php echo $_helper->getSocial('pinterest_name');?>" href="<?php echo $_helper->getSocial('pinterest_url');?>" target="_blank"> 
+				<img class="img" src="<?php echo $this->getViewFileUrl('images/s6.png') ?>" /><span class="name-social"><?php echo $_helper->getSocial('pinterest_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+	</ul>
+</div>

@@ -1,0 +1,30 @@
+<?php
+/**
+ * Slider template for separate item
+ *
+ */
+
+/**
+ * @var $this Embitel\Slider\Block\View
+ * @see Embitel\Slider\Block\View
+ */
+?>
+<?php $_sliderItem = $this->getSlider(); ?>
+    <div class="slider_item_subtitle">
+        <?php echo $this->formatDate($_sliderItem->getPublishedAt()) ?> |
+        <?php echo $this->escapeHtml($_sliderItem->getAuthor()) ?>
+    </div>
+
+<div class="slider_item_view">
+    <?php if ($imageUrl = $this->getImageUrl($_sliderItem, 400)): ?>
+       <p><img src="<?php echo $imageUrl ?>" alt="<?php echo $this->escapeHtml($_sliderItem->getTitle()) ?>" /></p>
+    <?php endif; ?>
+
+    <div class="slider_item_content"><?php echo $_sliderItem->getContent() ?></div>
+
+    <div class="pager">
+        <a href="<?php echo $this->getBackUrl() ?>">
+            <?php echo __('Return to list') ?>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+
+                    <form id="contact-form" action="<?php echo $block->getUrl('excellence/hello/myform')?>" method="post" role="form">
+                        <div class="form-group field-contactform-name required">
+                            <label class="control-label active" for="contactform-name">Name</label>
+                            <input id="contactform-name" class="form-control name" name="name" placeholder="Enter your name" aria-required="true" aria-invalid="true" type="text">
+                            <span class="namerror" style="color:red;display:none">Invalid Name.<span>
+                        </div>
+                        <div class="form-group field-contactform-contact required">
+                            <label class="control-label active" for="contactform-contact">Moblie Number</label>
+                            <input id="contactform-contact" class="form-control contact" name="contact" maxlength="11" placeholder="Enter your contact number" aria-required="true" type="text">
+                            <span class="conerror" style="color:red;display:none">Invalid Mobile Number.<span>
+                        </div>
+                        <div class="form-group field-contactform-email required">
+                            <label class="control-label active" for="contactform-email">Email</label>
+                            <input id="contactform-email" class="form-control email67" name="email" placeholder="Enter your email address" aria-required="true" type="text">
+                            <span class="emaerror" style="color:red;display:none">Invalid Email Id.<span>
+                        </div>
+                        <div class="form-group field-contactform-subject required">
+                            <label class="control-label active" for="contactform-subject">Subject</label>
+                            <input id="contactform-subject" class="form-control subject" name="subject" placeholder="Enter your subject" aria-required="true" type="text">
+                            <span class="suberror" style="color:red;display:none">Subject Should be required.<span>
+                        </div>
+                        <div class="form-group field-contactform-body required">
+                            <label class="control-label" for="contactform-body">Enquiries / Questions / Feedback</label>
+                            <textarea id="contactform-body" class="form-control msg" name="msg" rows="6" aria-required="true"></textarea>
+                            <span class="msgerror" style="color:red;display:none">Message Should be required.<span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="fine-print">
+                                All fields are required. We respect your privacy. We will only use the information you have given above to deal with your query. </div>
+                
+                        </div>
+                
+                        <div class="form-group">
+                            <button type="submit" class="submitbtn" name="contact-button">Submit</button>
+                        </div>
+                
+                    </form>
+
+<!-- 
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $mediaUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+    echo $mediaUrl;
+?> -->
+<!--  <?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$connection = $resource->getConnection();
+$tableName = $resource->getTableName('turiknox_sampleimageuploader_image');
+
+//Select Data from table
+$sql = "Select * FROM " . $tableName;
+$result = $connection->fetchAll($sql);
+foreach ($result as $key) {
+    $img = $key['image'];
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $mediaUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+   // echo $mediaUrl;
+?>
+<img src="<?php echo $block->getUrl($mediaUrl).'sampleimageuploader/images/image'.$img.''; ?>">
+<?php
+}
+
+?> -->
+
+
+ <?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$connection = $resource->getConnection();
+$tableName = $resource->getTableName('embitel_bannerslide');
+
+//Select Data from table
+$sql = "Select * FROM " . $tableName;
+$result = $connection->fetchAll($sql);
+//print_r($result);
+foreach ($result as $key) {
+    $title = $key['title'];
+    $content = $key['content'];
+    $img = $key['image'];
+   
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $mediaUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+   // echo $mediaUrl;
+?>
+<img src="<?php echo $block->getUrl($mediaUrl).'Bannerslide/'.$img.''; ?>">
+<?php
+echo "<h4>".$title."</h4>";
+echo "<h5>".$content."</h5>";
+}
+
+?>
+
+
+

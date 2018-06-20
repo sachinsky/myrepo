@@ -1,0 +1,175 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php
+$p=0;
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->create('Magento\Customer\Model\Session');
+if ($customerSession->isLoggedIn()) {
+//echo $customid = $customerSession->getCustomer()->getId();
+ $customgp = $customerSession->getCustomer()->getGroupId();
+ if($customgp==2){
+    $p=1;
+ }
+}       
+$storeManager = $om->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $wholsellermaxqty = $_product->getWholesellerMaxQty();?>
+<?php //echo "sd".$_product->getWholesellerMinQty()?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart ssss">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control control-qty-cart">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ if($store_id==2){ echo $_product->getWholesellerMinQty() * 1;}else{ echo $block->getProductDefaultQty() * 1;} ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="qty-default input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+					   
+				<div class="control-qty">
+					<span class="quantity-controls quantity-plus"></span>
+					<span class="quantity-controls quantity-minus"></span>
+                    <?php
+                    if($store_id==2){
+                        $min_qty = $_product->getWholesellerMinQty();
+                    }else{
+                        $min_qty = 1;
+                    }
+                    ?>
+					<script type="text/javascript">
+						require([
+							'jquery'
+						], function ($) {
+                            $('.qty-default').attr('readonly',true);
+                            var astore_id1 = '<?php echo $store_id;?>';
+                            if(astore_id1==1){
+                                $('.wk_qs_quote_button').hide();
+                            }
+							$('.quantity-plus').click(function () {
+								$('.qty-default').val(Number($('.qty-default').val())+1);
+                                var a = '<?php echo $wholsellermaxqty;?>';
+                                var astore_id = '<?php echo $store_id;?>';
+                                var retailer = '<?php echo $_product->getRetailerMinQty();?>';
+                                retailer = parseInt(retailer);
+                                var c = parseInt($('.qty-default').val());
+                                // if(astore_id==2 && a<$('.qty-default').val()){
+                                //     $('#product-addtocart-button').hide();
+                                // }
+                                // if(astore_id==1 && c>retailer){
+                                //     //alert(1);
+                                //     $('.wk_qs_quote_button').show();
+                                // }
+							});
+							
+							$('.quantity-minus').click(function () {
+                                var ab = "<?php echo $min_qty;?>";
+								var value = Number($('.qty-default').val())-1;
+                                //alert(ab);
+                                if(value >= ab){
+                                    $('.qty-default').val(value);
+                                }
+                                var a = '<?php echo $wholsellermaxqty;?>';
+                                var astore_id = '<?php echo $store_id;?>';
+                                var retailer = '<?php echo $_product->getRetailerMinQty();?>';
+                                retailer = parseInt(retailer);
+                                var c = parseInt($('.qty-default').val());
+                                // if(astore_id==2 && a>=$('.qty-default').val()){
+                                //     $('#product-addtocart-button').show();
+                                // }
+								// if(astore_id==1 && c<=retailer){
+        //                             //alert(2);
+        //                             $('.wk_qs_quote_button').hide();
+        //                         }
+								
+							});
+						});
+					</script>
+				</div>
+            </div>
+            <?php if($store_id==2 && $_product->getIsSalable()==1){?>
+            <div class="newmoq"><?php echo $min_qty." Pieces/Pieces(Min. Order) <p class='proinstock'>IN STOCK</p>"; ?></div>
+            <?php }else if($store_id==2 && $_product->getIsSalable()==0){?>
+            <div class="newmoq"><?php echo $min_qty." Pieces/Pieces(Min. Order) <p class='proinstock'>OUT OF STOCK</p>"; ?></div>
+            <?php }?>
+        </div>
+        <?php endif; ?>
+        <div class="actions-full">
+        <div class="actions">
+            <?php //if($store_id==2){?>
+           <!--  <button type="submit"
+                    title="<?php /* @escapeNotVerified */ //echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button">
+                <span><?php /* @escapeNotVerified */ //echo $buttonTitle ?></span>
+            </button> -->
+            <?php //}else if($store_id==1){?>
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button">
+                <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php //}?>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+        <div class="sp-others">
+        	<a href="#" class="sp-buy-now">BUY NOW</a>
+            <a href="#" class="sp-fav-now">BUY NOW</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php if (!$block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "catalogAddToCart": {
+                "bindSubmit": false
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+<script language="javascript">
+require(['jquery'], function ($) {
+	$('.product-info-main .sp-fav-now').click(function(event){
+		event.preventDefault();
+		//alert(1);
+		$( "body .product-info-main .product-social-links .action.towishlist" ).trigger("click");
+	})
+	
+	$('.sp-compare-tittle a.sp-compare').click(function(event){
+		event.preventDefault();
+		//alert(1);
+		$( "body .product-info-main .product-social-links .action.tocompare" ).trigger("click");
+	})
+	
+});
+</script>

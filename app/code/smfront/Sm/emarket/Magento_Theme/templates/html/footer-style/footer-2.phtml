@@ -1,0 +1,84 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$_config = $this->helper('Sm\Emarket\Helper\Data');
+?>
+
+<div class="footer-container footer-style-2">
+	<div class="footer-wrapper">
+		<div class="before-footer">
+			<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-3 text-left">
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-logo-footer2')->toHtml(); ?>
+				</div>	
+				<div class="col-md-6 col-sm-5 text-left">
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-menu-footer2')->toHtml(); ?>
+				</div>
+				<div class="col-md-3  col-sm-4">
+					<?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+				</div>
+			</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="footer-top">
+				<div class="row">
+					<div class="col-md-3 col-sm-12 col-xs-12 contact-footer">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-contact-footer2')->toHtml(); ?>
+						
+					</div>
+					<div class="col-md-5 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12 customer-ft">
+								<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-customer-footer2')->toHtml(); ?>
+								
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12 categories-footer">
+								<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-categories-footer2')->toHtml(); ?>
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-12 col-xs-12 instagramgallery-footer">
+						<?php echo $block->getLayout()->createBlock('Sm\InstagramGallery\Block\InstagramGallery')->setTemplate('Sm_InstagramGallery::default.phtml')->toHtml(); ?>
+					</div>	
+				</div>
+			</div>
+			<div class="newsletter-footer">
+		
+				<?php echo $block->getChildHtml('form.subscribe.footer'); ?>
+		
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+				<div class="col-sm-6">
+					<?php if($_config->getAdvanced('custom_copyright')){ ?>
+							<address><?php echo $_config->getAdvanced('copyright_content') ?></address>
+					<?php } else {?>
+					<address><?php /* @escapeNotVerified */ echo $block->getCopyright() ?></address>
+				<?php } ?>
+				</div>
+				<div class="col-sm-6">
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('payment-footer')->toHtml(); ?>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+</div>
+
+
+
+

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2018 PBMAGE. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Pbmage_AttributeManager::pbmage" title="PBMAGE" module="Pbmage_AttributeManager" sortOrder="99" resource="Pbmage_AttributeManager::pbmage"/>
+        <add id="Pbmage_AttributeManager::attribute_manager" title="Attribute Manager" module="Pbmage_AttributeManager" sortOrder="1" parent="Pbmage_AttributeManager::pbmage" resource="Pbmage_AttributeManager::attribute_manager"/>
+        <add id="Pbmage_AttributeManager::category_attribute" title="Category" module="Pbmage_AttributeManager" sortOrder="1" parent="Pbmage_AttributeManager::attribute_manager" action="pbmage_attribute_manager/category/" resource="Pbmage_AttributeManager::category_attribute"/>
+        <add id="Pbmage_AttributeManager::customer_attribute" title="Customer" module="Pbmage_AttributeManager" sortOrder="2" parent="Pbmage_AttributeManager::attribute_manager" action="pbmage_attribute_manager/customer/" resource="Pbmage_AttributeManager::customer_attribute"/>
+        <add id="Pbmage_AttributeManager::customer_address_attribute" title="Customer Address" module="Pbmage_AttributeManager" sortOrder="3" parent="Pbmage_AttributeManager::attribute_manager" action="pbmage_attribute_manager/customer_address/" resource="Pbmage_AttributeManager::customer_address_attribute"/>
+    </menu>
+</config>

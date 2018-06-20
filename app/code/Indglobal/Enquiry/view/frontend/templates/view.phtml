@@ -1,0 +1,30 @@
+<?php
+/**
+ * Enquiry template for separate item
+ *
+ */
+
+/**
+ * @var $this Indglobal\Enquiry\Block\View
+ * @see Indglobal\Enquiry\Block\View
+ */
+?>
+<?php $_enquiryItem = $this->getEnquiry(); ?>
+    <div class="enquiry_item_subtitle">
+        <?php echo $this->formatDate($_enquiryItem->getPublishedAt()) ?> |
+        <?php echo $this->escapeHtml($_enquiryItem->getAuthor()) ?>
+    </div>
+
+<div class="enquiry_item_view">
+    <?php if ($imageUrl = $this->getImageUrl($_enquiryItem, 400)): ?>
+       <p><img src="<?php echo $imageUrl ?>" alt="<?php echo $this->escapeHtml($_enquiryItem->getTitle()) ?>" /></p>
+    <?php endif; ?>
+
+    <div class="enquiry_item_content"><?php echo $_enquiryItem->getContent() ?></div>
+
+    <div class="pager">
+        <a href="<?php echo $this->getBackUrl() ?>">
+            <?php echo __('Return to list') ?>
+        </a>
+    </div>
+</div>

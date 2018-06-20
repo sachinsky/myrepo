@@ -1,0 +1,45 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+ 
+$_config = $this->helper('Sm\Emarket\Helper\Data');
+$footerStyle = $_config->getThemeLayout('footer_style');
+
+include (dirname(__FILE__).'/footer-style/'.$footerStyle.'.phtml');
+
+?>
+<!--GO TO TOP-->
+	<?php if($_config->getAdvanced('show_gototop')){ ?>
+		<a id="yt-totop" href="javascript:void(0)" title="Go to Top"></a>
+		<script type="text/javascript">
+			require(['jquery'], function ($) {
+				$("#yt-totop").hide();
+				$(function () {
+					var wh = $(window).height();
+					var whtml =  $(document).height();
+					$(window).scroll(function () {
+						if ($(this).scrollTop() >= wh/10) {
+							$('#yt-totop').fadeIn();
+						} else {
+							$('#yt-totop').fadeOut();
+						}
+					});
+					$('#yt-totop').click(function () {
+						$('body,html').animate({
+							scrollTop: 0
+						}, 800);
+						return false;
+					});
+				});
+			});
+		</script>
+		
+	<?php } ?>

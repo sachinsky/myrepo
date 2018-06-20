@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Indglobal_Enquiry::enquiry" title="Enquiry" module="Indglobal_Enquiry" sortOrder="30" resource="Indglobal_Enquiry::enquiry"/>
+        <add id="Indglobal_Enquiry::enquiry_manage" title="All Items" module="Indglobal_Enquiry" sortOrder="10" parent="Indglobal_Enquiry::enquiry" action="enquiry/index/" resource="Indglobal_Enquiry::manage"/>
+    </menu>
+</config>

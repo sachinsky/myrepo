@@ -1,0 +1,99 @@
+<?php
+$a = $_REQUEST['similarid'];
+$b = explode(",", $a);
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+?>
+<div id="view-all-table">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Price</th>
+          <th scope="col">Condition</th>
+          <th scope="col">Seller Information</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php for($i=0;$i<sizeof($b)-1;$i++){
+          $product = $objectManager->create('Magento\Catalog\Model\Product')->load($b[$i]);
+          ?>
+           <?php $priceRender = $this->getLayout()->getBlock('product.price.render.default')
+                                                            ->setData('is_product_list', true);
+
+                                                        $price = '';
+                                                        if ($priceRender) {
+                                                            $price = $priceRender->render(
+                                                                \Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE,
+                                                                $product,
+                                                                [
+                                                                    'include_container' => true,
+                                                                    'display_minimal_price' => true,
+                                                                    'zone' => \Magento\Framework\Pricing\Render::ZONE_ITEM_LIST,
+                                                                    'list_category_page' => true
+                                                                ]
+                                                            );
+                                                        } ?>
+          <?php 
+          $rate = 0;
+          $ab = 0;
+          $objectManager =   \Magento\Framework\App\ObjectManager::getInstance();
+          $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION'); 
+          $result1 = $connection->fetchAll("SELECT * FROM marketplace_product where mageproduct_id='".$b[$i]."'");
+          foreach($result1 as $row){
+            $seller_id = $row['seller_id'];
+          }
+          $result1 = $connection->fetchAll("SELECT * FROM indglobal_seller where customer_id='".$seller_id."'");
+          foreach($result1 as $row){
+            $company_name = $row['company_name'];
+          }
+          $result1 = $connection->fetchAll("SELECT * FROM marketplace_datafeedback where seller_id='".$seller_id."'");
+          foreach($result1 as $row){
+            $ab = $ab + 1;
+            $rate = $rate + $row['feed_quality'];
+          }
+          //echo $rate;
+          //$ab = $ab * 100;
+          $finalrating = $rate/$ab;
+          ?>
+        <tr>
+          <th scope="row"><span class="price"><?php echo $price?></span></th>
+          <td>New</td>
+          <td>
+          	<span class="a-size-medium a-text-bold"><a href="#"><?php echo $company_name?></a></span>
+            <div class="rating-summary">
+                 <span class="label"><span>Rating:</span></span>
+                 <div class="rating-result" title="80%">
+                     <span style="width:<?php echo $finalrating."%"?>">
+                         <span>
+                             <span itemprop="ratingValue">80</span>% of <span itemprop="bestRating">100</span>
+                         </span>
+                     </span>
+                 </div>
+             </div>
+          </td>
+          <td><a href="<?php echo $product->getProductUrl()?>" class="view-pro">View Product</a></td>
+        </tr>
+        <?php }?>
+        <!-- <tr>
+          <th scope="row"><span class="price">₹1,800.00</span></th>
+          <td>New</td>
+          <td>
+          	<span class="a-size-medium a-text-bold"><a href="#">Appario Retail Private Ltd</a></span>
+            <div class="rating-summary">
+                 <span class="label"><span>Rating:</span></span>
+                 <div class="rating-result" title="80%">
+                     <span style="width:80%">
+                         <span>
+                             <span itemprop="ratingValue">80</span>% of <span itemprop="bestRating">100</span>
+                         </span>
+                     </span>
+                 </div>
+             </div>
+          </td>
+          <td><a href="#" class="view-pro">View Product</a></td>
+        </tr> -->
+        
+      </tbody>
+    </table>
+
+</div>

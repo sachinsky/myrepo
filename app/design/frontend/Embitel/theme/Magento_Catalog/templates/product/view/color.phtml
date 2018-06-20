@@ -1,0 +1,38 @@
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$_code = $block->getAtCode();
+$_className = $block->getCssClass();
+$_attributeLabel = $block->getAtLabel();
+$_attributeType = $block->getAtType();
+$_attributeAddAttribute = $block->getAddAttribute();
+
+if ($_attributeLabel && $_attributeLabel == 'default') {
+$_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
+}
+$_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+?>
+<?php if ($_attributeValue): ?>
+<div class="product attibute <?php echo $_className?>">
+<?php if ($_attributeLabel != 'none'): ?><strong class="type"><?php echo $_attributeLabel?></strong><?php endif; ?>
+<div class="value" <?php echo $_attributeAddAttribute;?>><?php echo $_attributeValue; ?></div>
+</div>
+<?php endif;?>
+
+
+<!-- <div class="home-category-block" style="display: flex; justify-content: space-around; margin-bottom: 20px; padding: 0 20px; text-align: center;">
+<div class="categories" style="position: relative;"><img src="{{media url="wysiwyg/category_1.png"}}" alt="" />
+<div style="font-size: 18px; color: #28517a;">Concealment Shelves</div>
+<a style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" href="{{store url="concealment-shelves.html"}}"></a></div>
+
+
+<div class="categories" style="position: relative;"><img src="{{media url="wysiwyg/category_2.png"}}" alt="" />
+<div style="font-size: 18px; color: #28517a;">Concealment Mirrors</div>
+<a style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" href="{{store url="concealment-mirrors.html"}}"></a></div>
+
+
+<div class="categories" style="position: relative;"><img src="{{media url="wysiwyg/category_2.png"}}" alt="" />
+<div style="font-size: 18px; color: #28517a;">Concealment Mirrors</div>
+<a style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" href="{{store url="concealment-mirrors.html"}}"></a></div>
+
+</div> -->

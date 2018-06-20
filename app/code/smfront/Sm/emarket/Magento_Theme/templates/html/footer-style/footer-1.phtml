@@ -1,0 +1,703 @@
+<?php
+$p=0;
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->create('Magento\Customer\Model\Session');
+if ($customerSession->isLoggedIn()) {
+$p=1;
+$selleremail1 = $customerSession->getCustomer()->getEmail();
+}
+?>
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();        
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$store_id = $storeManager->getStore()->getStoreId();
+?>
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFilefollow-scroll
+
+$_config = $this->helper('Sm\Emarket\Helper\Data');
+?>
+
+<div class="footer-container footer-style-1">
+   <div class="footer-wrapper">
+      <div class="newsletter-footer">
+      		<ul>
+            	<li><img class="img" src="<?php echo $this->getViewFileUrl('images/news-1.png') ?>" /></li>
+                
+                <li>
+                	<div class="news-form">
+                    	<?php echo $block->getChildHtml('form.subscribe.footer'); ?>
+                    </div>
+                </li>
+                <li><img class="img" src="<?php echo $this->getViewFileUrl('images/news-2.png') ?>" /></li>
+            </ul>
+         <!--<div class="container">
+            <div class="row">
+               <div class="col-md-10 col-sm-12 inner-newletter">
+                  <?php //echo $block->getChildHtml('form.subscribe.footer'); ?>
+               </div>
+               
+            </div>
+         </div>-->
+      </div>
+      <div class="footer-grey">
+         <div class="footer-links">
+            <div class="container">
+               <div class="footer-top">
+                  <div class="row">
+                     <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h2>Browse Categories</h2>
+                        <ul class="new-style">
+                             <li><a href="#">Air Conditioner</a></li>
+                             <li><a href="#">Split AC</a></li>
+                             <li><a href="#">Window AC</a></li>
+                             <li><a href="#">Welding</a></li>
+                             <li><a href="#">Tooling And Cutting</a></li>
+                             <li><a href="#">Abrasives</a></li>
+                             <li><a href="#">Power Tools</a></li>
+                             <li><a href="#">Pumps</a></li>
+                             <li><a href="#">Art & Entertainment</a></li>
+                             <li><a href="#">Halal Chemicals</a></li>
+                             <li><a href="#">Halal Eating</a></li>
+                             <li><a href="#">Halal Packaging, Tool & Machinery</a></li>
+                             <li><a href="#">Halal Shipping & Logistics</a></li>
+                             <li><a href="#">Health & Medical</a></li>
+                             <li><a href="#">Islamic Fashion</a></li>
+                             <li><a href="#">Appliances</a></li>
+                             <li><a href="#">Hajj Packages</a></li>
+                             <li><a href="#">Umrah Packages</a></li>
+                             <li><a href="#">Islamic Investment, Banking & Takaful</a></li>
+                             <li><a href="#">Islamic Travels </a></li>
+                             <li><a href="#">Hajj & Umrah</a></li>
+                             <li><a href="#">Hotels & Resorts</a></li>
+                             <li><a href="#">Islamic Tours</a></li>
+                             <li><a href="#">Agricultural Products</a></li>
+                             <li><a href="#">Apparel, Textile & Accessories</a></li>
+                             <li><a href="#">Halal Food & Beverages</a></li>
+                             <li><a href="#">Halal Food Ingredients</a></li>
+                             <li><a href="#">Health & Beauty </a></li>
+                             <li><a href="#">Sports & Fitness</a></li>
+                             <li><a href="#">Personal Care</a></li>
+                             <li><a href="#">Transportation & Logistics</a></li>
+                             <li><a href="#">Halal Meat Products</a></li>
+                             <li><a href="#">Sea Food Products</a></li>
+                             <li><a href="#">Electronics</a></li>
+                             <li><a href="#">Pharmaceuticals</a></li>
+                             <li><a href="#">Wellness – Herbs, Nutrition, General</a></li>
+                             <li><a href="#">Fragrance</a></li>
+                             <li><a href="#">Islamic Investment, Banking & Takaful</a></li>
+                             <li><a href="#">Islamic Travels </a></li>
+                             <li><a href="#">Hajj & Umrah </a></li>
+                             <li><a href="#">Hotels & Resorts</a></li>
+                             <li><a href="#">Islamic Tours</a></li>
+                             <li><a href="#">Agricultural Products</a></li>
+                             <li><a href="#">Apparel, Textile & Accessories</a></li>
+                             <li><a href="#">Halal Food & Beverages</a></li>
+                             <li><a href="#">Halal Food Ingredients</a></li>
+                             <li><a href="#">Health & Beauty</a></li>
+                        </ul>
+                     </div>
+                     <!--<div class="col-md-3 col-sm-12 col-xs-12 contact-footer">
+                        <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-contact-footer')->toHtml(); ?>
+                        
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 categories-footer">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12 customer-ft">
+                                <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-customer-footer')->toHtml(); ?>
+                                
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-12 categories-footer">
+                                <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('block-categories-footer')->toHtml(); ?>
+                            </div>
+                            
+                        </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 col-xs-12 instagramgallery-footer">
+                        <?php //echo $block->getLayout()->createBlock('Sm\InstagramGallery\Block\InstagramGallery')->setTemplate('Sm_InstagramGallery::default.phtml')->toHtml(); ?>
+                        </div>-->	
+                  </div>
+               </div>
+               <!--<div class="block-categories">
+                  <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-links')->toHtml(); ?>
+                  <?php //echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('payment-footer')->toHtml(); ?>
+                  </div>-->
+            </div>
+         </div>
+         <div class="footer-line">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-12">
+                     <ul class="footer-ul sp-new">
+                        <li>
+                           <h3>Why Halal Global Hub?</h3>
+                           	<ul class="sp-default">
+                              <li>Genuine Halal Certified Products</li>
+                               <li>Secured and Safe Payment and Delivery</li>
+                               <li>Exposure to numerous Global vendors</li>
+                               <li>Customer Assistance round the clock</li>
+                               <li>Choices in abundance to compare</li>
+                           </ul>
+                        </li>
+                        <li>
+                           <div class="app-block">
+                              <h3>Download our app</h3>
+                              <ul class="image-ul">
+                                 <li><a href="#"><img class="img" src="<?php echo $this->getViewFileUrl('images/apple-app.png') ?>" /></a></li>
+                                 <li><a href="#"><img class="img" src="<?php echo $this->getViewFileUrl('images/play-app.png') ?>" /></a></li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li>
+                        	<div class="connect-support">
+                              <h3>Connect with us</h3>
+                              <?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+                           </div>
+                           <div class="customer-support">
+                              <h3>Customer Support</h3>
+                              <strong>+91 7200 41 13 13</strong>
+                           </div>
+                           
+                        </li>
+                        
+                        <li>
+
+                           <div class="payment-block">
+                              <h3>Reach us at</h3>
+                              <div class="reach-us">
+                                 <div class="f-location">39/19, Guruswamy Enclave,Dr.Guruswamy Road, Chetpet,Chennai-600 031</div>
+                                 <div class="f-email">halalglobalhub@gmail.com</div>
+                                 <div class="f-web">www.halalglobalhub.com</div>
+                                 <div class="f-skype">Halalglobalhub</div>
+                                 <div class="f-call">+91 7200 41 13 13</div>
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="footer-red">
+         <div class="container">
+               <div class="row">
+                    <ul class="red-ul">
+                        <li>
+                            <h4><span>H</span>alal Global Hub</h4>
+                            <ul>
+                                <li><a href="<?php echo $block->getUrl('about-us')?>">About Us</a></li>
+                                <li><a href="#">Sitemap</a></li>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="<?php echo $block->getUrl('dispute')?>">Submit A Dispute</a></li>
+                                <li><a href="<?php echo $block->getUrl('trackorder')?>">Track Order</a></li>
+                                <li><a href="#">Coupons</a></li>
+                                <li><a href="#">Advertise</a></li>
+                                <li><a href="#">HGH Assured</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Gallery</a></li>
+                                <li><a href="#">Store Locator</a></li>
+                                <li><a href="#">Intellectual Property Claims</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <h4><span>P</span>artners</h4>
+                            <ul class="mar-bottom">
+                                <?php if($store_id!=2){?>
+                                <li><a href="#">Wholesale Programme</a></li>
+                                <?php }else{?>
+                                <li><a href="#">Retail Programme</a></li>
+                                <?php }?>
+                                <li><a href="<?php echo $block->getUrl('franchise')?>">Franchise</a></li>
+                                <li><a href="#">B2B Programme</a></li>
+                                <li><a href="#">Logistics</a></li>
+                                <li><a href="#">Affiliate</a></li>
+                            </ul>
+                            
+                            <h4><span>S</span>ervices</h4>
+                            <ul>
+                                <li><a href="#">Trade Shows</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Directory</a></li>
+                                <li><a href="#">Certification</a></li>
+                                <li><a href="#">Travel</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <h4><span>B</span>uyers</h4>
+                            <ul class="mar-bottom-small">
+                                <li><a href="#">How to Buy</a></li>
+                                <li><a href="<?php echo $block->getUrl('customer/account/create')?>">Become a Buyer</a></li>
+                                <li><a href="#">Buyer Protection</a></li>
+                                <li><a href="#">Membership</a></li>
+                                <?php if($store_id==2){?>
+                                <li><a href="#">Message Centre</a></li>
+                                <li><a href="#">RFQ</a></li>
+                                <?php }?>
+                                <li><a href="<?php echo $block->getUrl('customer/account')?>">My Account</a></li>
+                            </ul>
+                            
+                            <h4><span>S</span>ellers</h4>
+                            <ul>
+                                <li><a href="#">How to Sell</a></li>
+                                <li><a href="<?php echo $block->getUrl('seller')?>">Become a Seller</a></li>
+                                <li><a href="#">Seller Guarantee</a></li>
+                                <li><a href="#">Membership</a></li>
+                                <li><a href="<?php echo $block->getUrl('seller')?>">My Account</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <h4><span>P</span>olicies</h4>
+                            <ul class="mar-bottom-small">
+                                <li><a href="#">Return and Refund</a></li>
+                                <li><a href="#">Shipping</a></li>
+                                <li><a href="#">Privacy</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="#">Cancellation</a></li>
+                                <li><a href="#">Warranty</a></li>
+                            </ul>
+                            
+                            <div class="footer-video"><img class="img" src="<?php echo $this->getViewFileUrl('images/video.jpg') ?>" /></div>
+                        </li>
+                        
+                        <li>
+                            <h4><span>Q</span>uick Help</h4>
+                            <form class="footer-form" method="post">
+                            	<div class="form-group">
+                                	<div class="half-form">
+                                    	<input type="text" class="form-control name123" name="name" placeholder="Name ...." required>
+                                        <span class="namerror" style="color:red;display:none">Name Required</span>
+                                    </div>
+                                    <div class="half-form">
+                                    	<input type="email" class="form-control email056" name="email" placeholder="E-mail ...." required>
+                                        <span class="emaerror" style="color:red;display:none">Invalid Email id</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+									<input type="text" class="form-control subject" name="subject" placeholder="Subject ...." required>
+                                    <span class="suberror" style="color:red;display:none">Subject Required</span>
+                                </div>
+                                <div class="form-group">
+									<textarea class="form-control message" name="message" id="exampleTextarea" rows="3" placeholder="Message ...." required></textarea>
+                                    <span class="msgerror" style="color:red;display:none">Message Required</span>
+                                </div>
+                                <button type="button" class="btn btn-primary sendmail1">send message</button>
+                            </form>
+                        </li>
+                        
+                    </ul>
+                  
+                  
+                  
+                  
+                  
+               </div>
+            </div>
+      </div>
+      <div class="footer-bottom">
+         <div class="container">
+         	<div class="row">
+            	<div class="col-xs-12 col-sm-12 col-md-12">
+                	<ul>
+                    	<li><img class="img" src="<?php echo $this->getViewFileUrl('images/l1.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l2.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l3.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l4.png') ?>" /></li>
+                    </ul>
+                    <ul>
+                    	<li><img class="img" src="<?php echo $this->getViewFileUrl('images/l5.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l6.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l7.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l8.png') ?>" /></li>
+                    </ul>
+                    <ul>
+                    	<li><img class="img" src="<?php echo $this->getViewFileUrl('images/l9.png') ?>" /></li>
+                        <li><img class="img" src="<?php echo $this->getViewFileUrl('images/l10.png') ?>" /></li>
+                    </ul>
+                    <ul>
+                        <li><a href="https://msg91.com/startups/?utm_source=startup-banner">    <img src="https://msg91.com/images/startups/msg91Badge.png"         width="120" height="90" title="MSG91 - SMS for Startups"        alt="Bulk SMS - MSG91"></a></li>
+                    </ul>
+                    
+
+                    <div class="copyright">Copyright © 2018 Halalglobalhub.com . All Rights Reserved. <a href="https://indglobal.in/" target="_blank" title="best web development company in bangalore"><img class="img" src="<?php echo $this->getViewFileUrl('images/ind-icon.png') ?>" /></a></div>
+                </div>
+                
+            </div>
+            <?php if($_config->getAdvanced('custom_copyright')){ ?>
+            <!--<address><?php //echo $_config->getAdvanced('copyright_content') ?></address>-->
+            <?php } else {?>
+            <!--<address><?php /* @escapeNotVerified */ //echo $block->getCopyright() ?></address>-->
+            <?php } ?>
+         </div>
+      </div>
+   </div>
+</div>
+<link  rel="stylesheet" type="text/css"  media="all" href="<?php echo $this->getViewFileUrl('css/config_1.css') ?>" />
+<link  rel="stylesheet" type="text/css"  media="all" href="<?php echo $this->getViewFileUrl('css/responsive.css') ?>" />
+
+<!-- Modal -->
+  <div class="modal fade" id="contactModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <form method="post" action="<?php echo $block->getUrl('enquiry/index/sendmail')?>">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Contact</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Name" name="name" required>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control selleremail" name="selleremail" value="">
+            <input type="email" class="form-control" placeholder="Email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+          <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Comments" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        
+      </div>
+      </form>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Modal -->
+
+<script type="text/javascript">
+	require([
+		'jquery',
+		'spmenu',
+		'spmatchheight'
+	], function ($) {
+		/*$('.header-top .col-xs-12.col-sm-12.col-md-12.col-lg-12').meanmenu({
+			meanScreenWidth		: "768"
+		});*/
+		$('.policy-home1 ul li h3 a').click(function(event){
+			event.preventDefault();
+		})
+		//alert(1);
+		$('.item .product-item-name').matchHeight();
+		$('.item .sp-rating').matchHeight();
+		//.products-grid .price-box
+		$('.sp-wholeseller-price').matchHeight();
+		$('.sp-product-price').matchHeight();
+		//
+		$('.moq-holder').matchHeight();
+		//
+		$('.sp-other-details').matchHeight();
+		//
+		/*$('#askque_new').click(function(event){
+			event.preventDefault();
+			$('#myAdminContact').fadeIn('slow');
+		})
+		$('#myAdminContact .close').click(function(event){
+			event.preventDefault();
+			$('#myAdminContact').fadeOut('slow');
+		}) */
+		//$('.product-item-info').matchHeight();
+		//alert(1);
+		//$('.moq-holder').matchHeight();
+		//$('.product-item .product-item-details').matchHeight();
+		///
+		if($(window).width() < 768){
+			//var spnav = '<div id="sp-top-nav">';
+			//spnav += '<a href="#spnav" class="sp-reveal"><span></span><span></span><span></span></a>';
+			var spnav = '<div class="sp-top-logo">'+$('.header-middle .logo-content strong.logo').html()+'</div>';
+			spnav += '<a href="#spnav" class="sp-top-search"></a>';
+			//spnav += '</div>';
+			console.log('mobile');
+			$('.header-bottom .nav-mobile-container').append(spnav);
+			
+			//var navcontent = '<nav class="sp-navigation-mobile">'+$('.navbar-active .sidebar-type .navigation-mobile').html()+'</div>';
+			//$('body').prepend(navcontent);
+			//alert(navcontent);
+			
+			$(document).on('click', ' a.sp-top-search', function(event){
+				event.preventDefault();
+				//console.log(111);
+				$('.sp-search').slideToggle();
+			})
+		}
+		///
+		
+		///////
+		//.sm_megamenu_wrapper_vertical_menu .sm_megamenu_menu .sm_megamenu_col_6 .sm_megamenu_head_item .sm_megamenu_title .sm_megamenu_title .sm_megamenu_content
+		$('ul.sm_megamenu_menu li').each(function( index ) {
+			console.log( index + ": " + $( this ).text() );
+			var getpic = $( this ).find('.sm-megamenu-child .sm_megamenu_head_item .sm_megamenu_title .sm_megamenu_content img').attr('src');
+			if(getpic != undefined){
+				//alert(getpic);
+				$( this ).find('.sm-megamenu-child .sm_megamenu_head_item .sm_megamenu_title .sm_megamenu_right').remove();
+				//.sm-megamenu-child > .sm_megamenu_col_6
+				//$( this ).find('.sm-megamenu-child').append('<div class="sp-mega-pic"><img class="img" src="'+getpic+'" /></div>');
+				$( this ).find('.sm-megamenu-child').append('<div class="sp-mega-pic" style="background:url('+getpic+') no-repeat; background-size:cover;"></div>')
+			}
+			
+		});
+		////////////////
+		var pageURL = $(location).attr("href");
+		var trainindIdArray = pageURL.split('/');
+		//alert(trainindIdArray[3]);
+		var mylan = '<img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND';
+		if(trainindIdArray[3] == 'my'){
+			mylan = $('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(1) a .give-space').html();
+			$('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(1) a .give-space').html('<a href="http://halalglobalhub.com"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND</span></a>');
+		}else if(trainindIdArray[3] == 'sg'){
+			mylan = $('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(2) a .give-space').html();
+			$('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(2) a .give-space').html('<a href="http://halalglobalhub.com"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND</span></a>');
+		}else if(trainindIdArray[3] == 'th'){
+			mylan = $('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(3) a .give-space').html();
+			$('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(3) a .give-space').html('<a href="http://halalglobalhub.com"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND</span></a>');
+		}else if(trainindIdArray[3] == 'id'){
+			mylan = $('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(4) a .give-space').html();
+			$('.header-top ul.top-nav-ul > li.drop-block ul li:nth-child(4) a .give-space').html('<a href="http://halalglobalhub.com"><span class="give-space"><img src="http://halalglobalhub.com/pub/media/flag/India.jpg">IND</span></a>');
+		}
+		$('.header-top ul.top-nav-ul > li.drop-block > .give-space').html(mylan);
+		/////////////// 
+		$('#col-right a.banner').click(function(event){
+			event.preventDefault();
+			var element = $(this).attr('href');
+			copyToClipboard(element)
+		})
+		///////
+		function copyToClipboard(element) {
+			var $temp = $("<input>");
+			$("body").append($temp);
+			$temp.val(element).select();
+			document.execCommand("copy");
+			$temp.remove();
+			/////
+			//alert(111);
+			var ftop = $(window).scrollTop()-185;
+		   	var gettop = $(window).scrollTop()+185;
+		   	$('body').prepend('<div id="sp-infos" style="top:'+ftop+'px">Coupon code copied</div>');
+			//alert(ftop);
+		   	$( "#sp-infos" ).animate({
+				top: gettop
+		  	}, 500, function() {
+				// Animation complete.
+				setTimeout(function(){ removeCopiedPop(); }, 3000);
+		  	});
+			function removeCopiedPop(){
+				var ftop = $(window).scrollTop()-60;
+				 //var gettop = $(window).scrollTop()+60;
+				$( "#sp-infos" ).animate({
+					top: ftop,
+					opacity:0
+				}, 500, function() {
+					// Animation complete.
+					$('#sp-infos').remove();
+				});
+				/*$('#sp-infos').fadeOut( "fast", function() {
+					// Animation complete.
+					//alert(1);
+					$('#sp-infos').remove();
+				});*/
+			}
+		  /////
+		}
+		////
+		/*$('.sp-wholeseller-item .sp-inner-item .sp-bottom-section .sp-mail').click(function(event){
+			event.preventDefault();
+			alert(12);
+			$('#contactModal').modal('show');
+		})*/
+		//////
+	});
+</script> 
+
+<script language="javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+        $('.sendmail').click(function(){
+            var id = $('.seller_id').val();
+            $('.selleremail').val(id);
+        })
+		//////sm_megamenu_firstcolumn
+		var ggg = $('.sm-megamenu-child.sm_megamenu_dropdown_6columns').innerHeight();
+		//$('.sm_megamenu_col_6.sm_megamenu_firstcolumn').css({'height':ggg, 'overflow-y':'scroll'})
+		//delete
+		//$('.block-minicart .action.delete').click(function(event){
+		
+		
+        //
+        //alert(1);
+        /*$(document).on('click', '#minicart-content-wrapper .new-checkout a', function(event){
+            event.preventDefault();
+            //alert(1);
+            $('body').addClass('_has-modal');
+            $('.popup-authentication').addClass('_show');
+        });*/
+        
+        //
+    });
+    
+});
+</script>
+<SCRIPT TYPE="text/javascript">
+function Ispassword(password){
+    if(password.length<8){
+        return false;
+    }else{
+        return true;
+    }
+}
+function Isname99(name){
+    var regex = /^[a-zA-Z ]*$/;
+        if (regex.test(name)) {
+           return true;
+        }else{
+           return false;
+        }
+}
+function Isemail99(email){
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(!regex.test(email)) {
+           return false;
+        }else{
+           return true;
+        }
+}
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+		/////
+		/*$('ol.product-items li').each(function( index ) {
+			var pp = $( this ).find('.product-item-details .retail-price').text();
+			alert(pp);
+		});*/
+		/////////
+		$('.sm_megamenu_wrapper_vertical_menu .sm_megamenu_menu li')
+		.mouseover(function() {
+			var gh = $( this ).find('.sm_megamenu_col_2').height();
+			if(gh > $( this ).height()){
+				$( this ).find('.sm_megamenu_col_2:nth-child(1)').css({'overflow-y':'scroll', 'height':$( this ).find('.sm_megamenu_dropdown_6columns').height()-60})
+			}
+			$( this ).find('.sm_megamenu_dropdown_6columns').stop( true, true ).fadeIn('fast');
+		})
+		.mouseout(function() {
+			//$( this ).find( "span" ).text( "mouse out " );
+			$( this ).find('.sm_megamenu_dropdown_6columns').stop( true, true ).delay(1500).fadeOut('fast');
+		});
+		//alert($('.sp-whole-float-section').length);
+		if($('.sp-whole-float-section').length > 0){
+			if($('.box-tocart.wholesaler-cart').length > 0){
+			//alert(1);
+			var div1 = $(".box-tocart.wholesaler-cart");
+			var div2 = $(".sp-whole-float-section");
+		
+			var div1_top = div1.offset().top;
+			var div2_top = div2.offset().top;
+			var div1_bottom = div1_top + div1.height();
+			var div2_bottom = div2_top + div2.height();
+		
+			if (div1_bottom >= div2_top && div1_top < div2_bottom) {
+				//alert("Overlapped");
+				$(".box-tocart.wholesaler-cart").addClass('gpad');
+			} else {
+				//$("#result").html("");
+			}
+		}
+		}
+		///////
+       $('.sendmail1').click(function(){
+         var a = $('.name123').val();
+         if(Isname99(a)==false){
+            $('.namerror').show();
+            return false;
+         }else{
+            $('.namerror').hide();
+         }
+         var a = $('.name123').val();
+         if(a==""){
+            $('.namerror').show();
+            return false;
+         }else{
+            $('.namerror').hide();
+         }
+         var b = $('.email056').val();
+          if(Isemail99(b)==false){
+            $('.emaerror').show();
+            return false;
+         }else{
+            $('.emaerror').hide();
+         }
+         var c = $('.subject').val();
+         if(c==""){
+            $('.suberror').show();
+            return false;
+         }else{
+            $('.suberror').hide();
+         }
+         var d = $('.message').val();
+         if(d==""){
+            $('.msgerror').show();
+            return false;
+         }else{
+            $('.msgerror').hide();
+         }
+         var g = a + "?" + b + "?" + c + "?" + d;
+        $.ajax({
+        type: "POST",
+        url: "http://halalglobalhub.com/enquiry/index/sendmail1",
+        data: {id:g},
+        success: function(result){
+                alert(result);
+                $('.name123').val('');
+                $('.email').val('');
+                $('.subject').val('');
+                $('.message').val('');
+            }
+      })
+       })
+    });
+    
+});
+</script>
+<script language="javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+        $('.name123').keyup(function(){
+           var a = $('.name123').val();
+         if(Isname99(a)==false){
+            $('.namerror').show();
+            return false;
+         }else{
+            $('.namerror').hide();
+         }
+        })
+        $('.email056').change(function(){
+          var b = $('.email056').val();
+          if(b==""){
+            $('.emaerror').hide();
+        }else{
+          if(Isemail99(b)==false){
+            $('.emaerror').show();
+            return false;
+         }else{
+            $('.emaerror').hide();
+         }
+     }
+        })
+
+       
+    })
+})
+</script>

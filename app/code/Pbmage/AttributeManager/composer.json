@@ -1,0 +1,23 @@
+{
+    "name": "pbmage/attributemanager",
+    "description": "Magento 2 module to add a new user define different types (category, customer, customer address) of attributes",
+    "type": "magento2-module",
+    "version": "100.0.0",
+    "license": [
+        "OSL-3.0"
+    ],
+    "authors": [{
+        "name": "Bhavin Bhalodiya",
+        "email": "pbmage@hotmail.com",
+        "homepage": "",
+        "role": "Developer"
+    }],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Pbmage\\AttributeManager\\": ""
+        }
+    }
+}

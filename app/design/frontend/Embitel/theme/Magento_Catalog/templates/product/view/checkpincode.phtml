@@ -1,0 +1,27 @@
+<?php echo "Check pincode availability: "; ?>
+ <form id="contact-form" action="<?php echo $block->getUrl('excellence/hello/myform')?>" method="post" role="form">
+ 	<input type="text" name="pincode">
+ 	<input type="submit" value="Check here" class="action primary tobuynow">
+ </form>
+
+<!-- 
+  <script>
+function checkUserAvailability() {
+    var form = document.myform;
+    var urlWcsp = '<?php echo $block->getUrl('excellence/hello/myform',array("_secure"=>true) )?>';
+    alert(urlWcsp);
+var dataString = jQuery(form).serialize();
+jQuery.ajax( {
+    type: 'POST',
+    url: urlWcsp,
+    //data: { foton : jQuery('input:checkbox:checked').push(this).val()},
+         data: dataString,
+    success: function(data) {
+      jQuery('#message').html(data);
+
+     console.log(data);
+
+    }
+} );
+}
+</script> -->

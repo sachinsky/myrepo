@@ -1,0 +1,184 @@
+<?php
+$p=0;
+$om = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $om->create('Magento\Customer\Model\Session');
+if ($customerSession->isLoggedIn()) {
+$p=1;
+$a = $customerSession->getCustomer()->getEmail();
+}
+?>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+		<div class="trackorder">
+            <form method="post" action="#">
+            <ul>
+                <li>Track your order</li>
+                <li><input name="orderid" class="orderid" placeholder="Enter your order id" type="text"><span class="errororder" style="color:red;display:none">*Order id is required</span></li>
+                <li><input name="email" class="email" value="<?php if($p==1) echo $a?>" placeholder="Enter your mail id" type="text"><span class="erroremail" style="color:red;display:none">*Email id is required</span></li>
+                <li><input name="" value="Check Status" type="submit" id="track-order"></li>
+            </ul>
+            </form>
+		</div>
+        <div id="trackresult">
+        	<div id="track-title">
+            	<ul>
+                	<li>Order id</li>
+                    <li class="ordernumber"></li>
+                </ul>
+            </div>
+            <div id="not-found"></div>
+            <div class="shipment">
+                <ol class="progtrckr" data-progtrckr-steps="3">
+                    <li id="order-confirmed" class="progtrckr">
+                        <span class="track-img"><img src="<?php echo $this->getViewFileUrl('images/tr1.png') ?>" /></span>
+                        <span class="track-icon"></span>
+                        <span class="track-title">Order Confirmed</span>
+                    </li>
+                    <li id="shipped" class="progtrckr-done">
+                        <span class="track-img"><img src="<?php echo $this->getViewFileUrl('images/tr2.png') ?>" /></span>
+                        <span class="track-icon"></span>
+                        <span class="track-title">Shipped</span>
+                    </li>
+                    <!--<li class="progtrckr-todo">
+                        <span class="track-img"><img src="<?php echo $this->getViewFileUrl('images/tr3.png') ?>" /></span>
+                        <span class="track-icon"></span>
+                        <span class="track-title">Out for delivery</span>
+                    </li>-->
+                    <li id="delivered" class="progtrckr-todo">
+                        <span class="track-img"><img src="<?php echo $this->getViewFileUrl('images/tr4.png') ?>" /></span>
+                        <span class="track-icon"></span>
+                        <span class="track-title">Delivered</span>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="shipment-details">
+            	<ul>
+                	<li>
+                    	Order Placed
+                        <strong class="orderdate"></strong>
+					</li>
+                   <!--  <li>
+                    	Order Delivery
+                        <strong>7 business working days</strong>
+					</li> -->
+                    <li>
+                    	<a href="#" class="orderdetail">View Order Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="trackresult_blank">
+        	<span class="trackblank"><img src="<?php echo $this->getViewFileUrl('images/track-icon.png') ?>" /></span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var action = 'click';
+var speed = "500";
+	require(['jquery'], function ($) {
+		$('#track-order').click(function(event){
+			event.preventDefault();
+			//alert('track-order');
+            var a = $('.orderid').val();
+            var b = $('.email').val();
+            if(a==""){
+                $('.errororder').show();
+                return false;
+            }else{
+                $('.errororder').hide();
+            }
+            if(b==""){
+                 $('.erroremail').show();
+                return false;
+            }else{
+                $('.erroremail').hide();
+            }
+            $('.ordernumber').text(a);
+            var c = a + "?" + b;
+            $.ajax({
+            type: "POST",
+            url: "http://halalglobalhub.com/enquiry/index/trackorder",
+            data: {id:c},
+            success: function(result){
+                //alert(result);
+                var ab = result.split("?");
+               // alert(ab[2]);
+               var path = "<?php echo $block->getUrl()?>"
+               var path1 = path + "sales/order/view/order_id/" + ab[1];
+              // alert(path1);
+				$('#trackresult_blank').css({'display':'none'});
+				if(ab[0] == 0){
+					$('#trackresult .shipment, #trackresult .shipment-details').css({'display':'none'});
+                    $('#trackresult #not-found').text('Sorry ! Email id is invalid.');
+					$('#trackresult #not-found').css({'display':'block'});
+					$('#trackresult').css({'display':'block'});
+				}else if(ab[0] == 4){
+                    $('#trackresult .shipment, #trackresult .shipment-details').css({'display':'none'});
+                    $('#trackresult #not-found').text('Sorry ! No Order Found.');
+                    $('#trackresult #not-found').css({'display':'block'});
+                    $('#trackresult').css({'display':'block'});
+                }else if(ab[0] == 1){
+					$('#trackresult .shipment, #trackresult .shipment-details').css({'display':'block'});
+					$('#trackresult #not-found').css({'display':'none'});
+					/////
+					$('#trackresult #order-confirmed').addClass('done');
+					/////
+					$('#trackresult').css({'display':'block'});
+                    $('.orderdate').text(ab[2]);
+                    $('.orderdetail').attr("href", path1);
+				}else if(ab[0] == 2){
+					$('#trackresult .shipment, #trackresult .shipment-details').css({'display':'block'});
+					$('#trackresult #not-found').css({'display':'none'});
+					////////
+					$('#trackresult #order-confirmed').addClass('done');
+					$('#trackresult #shipped').addClass('done');
+					///////
+					$('#trackresult').css({'display':'block'});
+                    $('.orderdate').text(ab[2]);
+                    $('.orderdetail').attr("href", path1);
+				}else if(ab[0] == 3){
+					$('#trackresult .shipment, #trackresult .shipment-details').css({'display':'block'});
+					$('#trackresult #not-found').css({'display':'none'});
+					////////
+					$('#trackresult #order-confirmed').addClass('done');
+					$('#trackresult #shipped').addClass('done');
+					$('#trackresult #delivered').addClass('done');
+					///////
+					$('#trackresult').css({'display':'block'});
+                    $('.orderdate').text(ab[2]);
+                    $('.orderdetail').attr("href", path1);
+				}
+				//$('#trackresult').css({'display':'block'});
+				//$('#trackresult_blank').css({'display':'none'});
+            }
+          })
+			
+		})
+		
+		$('ol.progtrckr > li').each(function(index) {
+			//alert(index);
+			$(this).find('.track-icon').html(index+1);
+		});
+		
+		
+	});
+</script>
+<?php
+if(!empty($_REQUEST['order_id']) && !empty($_REQUEST['email'])){
+    $bborder = $_REQUEST['order_id'];
+    $bbemail = $_REQUEST['email'];
+?>
+<script language="javascript">
+require(["jquery"],function($) {
+    $(document).ready(function() {
+        var kk = "<?php echo $bbemail;?>";
+        var kk1 = "<?php echo $bborder;?>";
+        $('.email').val(kk);
+        $('.orderid').val(kk1);
+        $('#track-order').trigger('click');
+    });
+    
+});
+</script>
+<?php }?>

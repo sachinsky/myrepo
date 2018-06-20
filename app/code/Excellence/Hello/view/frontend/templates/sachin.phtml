@@ -1,0 +1,31 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$connection = $resource->getConnection();
+$tableName = $resource->getTableName('embitel_bannerslide');
+
+//Select Data from table
+$sql = "Select * FROM " . $tableName;
+$result = $connection->fetchAll($sql);
+//print_r($result);
+foreach ($result as $key) {
+    $title = $key['title'];
+    $content = $key['content'];
+    $img = $key['image'];
+   
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $mediaUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+   // echo $mediaUrl;
+?>
+<img src="<?php echo $block->getUrl($mediaUrl).'Bannerslide/'.$img.''; ?>">
+<?php
+echo "<h4>".$title."</h4>";
+echo "<h5>".$content."</h5>";
+}
+
+?>
+
+
+

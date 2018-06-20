@@ -1,0 +1,233 @@
+@media (min-width: 1655px) {
+	.layout-boxed .page-wrapper .container{
+		width: 100% !important;
+	    max-width: auto !important;
+	    padding: 0 15px!important;
+	}
+	
+	#col-right {
+		.slidershow {
+			width: 70%;
+		}
+		.banner-slider{
+			width:30%;
+		}
+	}
+
+	.listingtabs-box2  .sm-listing-tabs .ltabs-items-container .products-grid .item {
+		width:19% !important; 
+		&:first-child{
+			width:43% !important; 
+			.box-image {padding: 28px  0;}
+		}
+		&:last-child{display: none;}
+		.clr1,.clr2,.clr3,.clr4,.clr5,.clr6 {
+			clear: none !important;
+		}
+	}
+
+}
+
+@media (min-width: 1200px) and (max-width: 1650px) {
+	.section1 {
+	  #col-left{
+	    width:21%;
+	  }
+	  #col-right{
+	     width:79%;
+	     .slidershow {
+				width: 70%;
+			}
+			.banner-slider{
+				width:30%;
+				.banner-right {
+					.banner {
+						/*margin-bottom: 40px !important*/
+					}
+				}
+			}
+			.sm-filterproducts.deals-slider .products-grid .item .item-inner .box-info {
+				.wrapper-deals .label , .deals-description{
+					display: none;
+				}	
+				.wrapper-deals .deals-countdown {
+					float: left !important;
+				}
+			} 
+		
+		   .sm-listing-tabs .ltabs-items-container .products-grid .item{
+		   	  width: 25%;
+		   	  &:nth-child(9),&:nth-child(10) {
+		   	  	display:none ;
+		   	  }
+		   }
+
+	  }
+	}
+	.products-sidebar .block-content .item .item-inner{
+		margin-bottom: 10px;
+		 &:nth-child(4),&:nth-child(5) {
+		 	display: none;
+		 }
+	}
+}
+
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+	.section1 {
+	 #col-left{
+	 	 width: 28%;
+	 }
+	  #col-right{
+	  	 width: 72%;
+	     .slidershow {
+				width: 100%;
+			}
+			.banner-slider{
+				display: none;
+			}
+	   .sm-listing-tabs {
+
+	   		.ltabs-tabs-container{
+	   			position: static;
+	   			.ltabs-tabs li {
+	   				 margin: 8px;
+	   			}
+	   		}
+		   	.ltabs-items-container .products-grid .item{
+		   	  width: 33.33333%;
+		   		&:nth-child(10) {
+		   	  	display:none ;
+		   	  }
+		   	}
+	   }
+
+	  }
+	}
+	.section3 .sm-filterproducts.block .products-grid  .item{
+		width: 33.3333%;
+		&:last-child{
+			display: none !important;
+		}
+	}
+  
+}
+
+@media (max-width: 991px) {
+.section1  #col-right .sm-listing-tabs .ltabs-tabs-container {
+	position: static;
+	.ltabs-tabs li {
+	   	margin: 8px;
+	}
+}
+	.left-button {
+    background: #222;
+    margin:20px 0 0;
+    padding: 5px 20px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 21px;
+  }
+  .overlay{
+     background: #000 ;
+    bottom: 0;
+    content: "";
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.2;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 9998;
+}
+	#col-left{
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    padding: 15px;
+    height: 100%;
+    bottom: 0;
+    overflow: auto;
+    background: white;
+    Z-index: 9999;
+    overflow: auto;
+    height: 100%;
+    .opacity(0);
+    .transition(all 0.3s ease-in);
+    &.active {
+      left: 0;
+      .opacity(1);
+    }
+    
+}
+	#col-right .sm-listing-tabs .ltabs-items-container .products-grid .item{
+		 width: 50%;
+	}
+	/*.section3 .sm-filterproducts.block .products-grid  .item{
+		width: 50%;
+	}*/
+	
+
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	
+	
+
+}
+
+@media (max-width: 767px) {
+.section3 .sm-filterproducts.block .products-grid  .item{
+		width: 100%;
+}
+/*banner*/
+.banner-center {
+    .banner-center-lt {
+      width: 100%;
+
+    }
+    .banner-center-cr{
+      width: 100%;
+    }
+    .banner-center-rt {
+      width: 100%;
+    }
+}
+ 
+}
+@media (max-width: 640px) {
+.sm-filterproducts.deals-slider .products-grid .item .item-inner  {
+	.box-info, .box-image {
+		display: block !important;
+		width: 100% !important;
+	}
+	.box-info{
+		padding: 0px 5px !important;
+	}
+
+
+}
+}
+@media (max-width: 480px) {
+
+	
+.sm-filterproducts.deals-slider .products-grid .owl-controls .owl-nav div , .section3 .sm-filterproducts.block .owl-controls .owl-nav div{
+	&:before{display:none !important;}
+	&.owl-prev {
+		padding:0 15px 0 0;
+	}
+	&.owl-next {
+		padding:0 0px 0 15px;
+	}
+
+}	
+
+#col-right .sm-listing-tabs .ltabs-items-container .products-grid .item {
+	width: 100%;
+}
+}

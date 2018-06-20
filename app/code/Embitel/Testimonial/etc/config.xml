@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+	
+        <freeforyou_customfee>
+            <freeforyou_customfee>
+                <freeforyou_status>1</freeforyou_status>
+            </freeforyou_customfee>
+        </freeforyou_customfee>
+        <freeforyou_customfee>
+            <freeforyou_customfee>
+                <freeforyou_name>Offer</freeforyou_name>
+            </freeforyou_customfee>
+        </freeforyou_customfee>
+        <freeforyou_customfee>
+            <freeforyou_customfee>
+                <freeforyou_customfeeamount>50</freeforyou_customfeeamount>
+            </freeforyou_customfee>
+        </freeforyou_customfee>
+        <freeforyou_customfee>
+            <freeforyou_customfee>
+                <freeforyou_minimumorderamount>0.01</freeforyou_minimumorderamount>
+            </freeforyou_customfee>
+        </freeforyou_customfee>
+	
+    </default>
+</config>
+			
