@@ -24,8 +24,7 @@ foreach ($result as $key) {
 echo "<h4>".$title."</h4>";
 echo "<h5>".$content."</h5>";
 }
-
-//echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('new_tab')->toHtml();
+echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer_links_block')->toHtml();
 ?>
 
 

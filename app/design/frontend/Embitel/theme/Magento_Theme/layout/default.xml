@@ -9,9 +9,9 @@
         <css src="css/customcss.css" />
 </head>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-<head>
+<!-- <head>
         <css src="css/customcss.css" />
-</head>
+</head> -->
 
 <body>
 <referenceBlock name="logo">
