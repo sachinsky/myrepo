@@ -9,5 +9,35 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <!-- to remove title from pages -->
+           <referenceBlock name="page.main.title" remove="true" />
+           <!-- to remove title from pages -->
+             <!-- top link -->
+     <referenceBlock name="header.links">           
+          <block class="Magento\Framework\View\Element\Html\Link\Current" name="cart" before="account">
+                    <arguments>
+                       <argument name="label" xsi:type="string">Cart33</argument>
+                       <argument name="path" xsi:type="string">checkout/cart</argument>          
+                    </arguments>            
+          </block> 
+</referenceBlock>
+ <referenceBlock name="header.links">
+                <block class="Magento\Framework\View\Element\Html\Link" name="custom-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">custom link</argument>
+                    <argument name="path" xsi:type="string" translate="true">customlink</argument>
+                </arguments>
+                </block>
+            </referenceBlock>
+            
+<!-- <referenceBlock name="catalog.topnav">        
+    <block class="Magento\Framework\View\Element\Html\Link\Current" name="cart" before="account">
+               <arguments>
+                       <argument name="label" xsi:type="string">Cart22</argument>
+                      <argument name="path" xsi:type="string">checkout/cart</argument>          
+               </arguments>            
+    </block> 
+</referenceBlock> -->
+<!-- tip link -->
     </body>
 </page>
