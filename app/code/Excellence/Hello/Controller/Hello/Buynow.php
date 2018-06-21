@@ -1,39 +1,39 @@
 <?php
 namespace Excellence\Hello\Controller\Hello;
  
-//use Magento\Framework\App\Action\Context;
-//use Magento\Framework\View\Result\PageFactory;
- 
-class Buynow extends \Magento\Checkout\Model\Cart
-
+ 
+class Buynow extends \Magento\Framework\App\Action\Action
 {
-protected $formKey;   
-protected $cart;
-protected $product;
+    protected $resultPageFactory;
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory)
+    {
+        $this->resultPageFactory = $resultPageFactory;       
+        return parent::__construct($context);
+    }
+     
+    public function execute()
+    {
+        //return $this->resultPageFactory->create(); 
+        $productId = 2;
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$product = $objectManager->create('\Magento\Catalog\Model\Product')->load($productId);
+$cart = $objectManager->create('Magento\Checkout\Model\Cart');  
+$formKey = $objectManager->create('\Magento\Framework\Data\Form\FormKey')->getFormKey();  
+//$option = array('469'=>459);
 
-public function __construct(
-\Magento\Framework\App\Action\Context $context,
-\Magento\Framework\Data\Form\FormKey $formKey,
-\Magento\Checkout\Model\Cart $cart,
-\Magento\Catalog\Model\Product $product,
-array $data = []) {
-    $this->formKey = $formKey;
-    $this->cart = $cart;
-    $this->product = $product;      
-    parent::__construct($context);
-}
-
-public function execute()
- { 
-  $productId =1;
-  $params = array(
-                'form_key' => $this->formKey->getFormKey(),
-                'product' => $productId, //product Id
-                'qty'   =>1 //quantity of product                
-            );              
-    //Load the product based on productID   
-    $_product = $this->product->load($productId);       
-    $this->cart->addProduct($_product, $params);
-    $this->cart->save();
- }
+$params = array(
+                    'form_key' => $formKey,
+                    'product' => $productId, //product Id
+                    'qty'   =>1, //quantity of product                
+                    
+                    );
+$cart->addProduct($product, $params);
+$cart->save();
+$this->messageManager->addSuccess(__('Item added to the cart successfully.'));
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setRefererOrBaseUrl();
+        return $resultRedirect;
+    } 
 }
