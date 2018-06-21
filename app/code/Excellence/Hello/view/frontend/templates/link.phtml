@@ -40,6 +40,7 @@ foreach ($categoryProducts as $product) {
     echo $product->getPrice() . '<br />';
     ?>
     <form action="<?php echo $block->getUrl('excellence/hello/buynow')?>" method="post">
+    	<input type="hidden" name="pid" value="<?php echo $product->getEntityId(); ?>">
     	<input type="submit" value="Buy Now" style=" height: 36px; width: 128px; color: white; background: #1081d8; border: 0px; font-size: 16px;">
     </form>
     <?php

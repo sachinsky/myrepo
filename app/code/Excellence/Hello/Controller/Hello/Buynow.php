@@ -16,7 +16,7 @@ class Buynow extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         //return $this->resultPageFactory->create(); 
-        $productId = 2;
+        $productId = $_POST['pid'];
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $product = $objectManager->create('\Magento\Catalog\Model\Product')->load($productId);
 $cart = $objectManager->create('Magento\Checkout\Model\Cart');  
