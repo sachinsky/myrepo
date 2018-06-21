@@ -1,16 +1,49 @@
 
    <?php
         
-        // get product by id
-$product = $block->getProductById(15);
- 
+// get product by id
+//$product = $block->getProductById(15);
 // get product by sku
 //$product = $block->getProductBySku('MT12');
- 
-echo $product->getEntityId() . '<br>';
-echo $product->getName() . '<br>';
-echo $product->getSKU() . '<br>';
-echo $product->getPrice() . '<br>';
-echo $product->getSpecialPrice() . '<br>';
-echo $product->getTypeId() . '<br>';
-echo $product->getProductUrl() . '<br>';
+//echo $product->getEntityId() . '<br>';
+//echo $product->getName() . '<br>';
+//echo $product->getSKU() . '<br>';
+//echo $product->getPrice() . '<br>';
+//echo $product->getSpecialPrice() . '<br>';
+//echo $product->getTypeId() . '<br>';
+//echo $product->getProductUrl() . '<br>';
+   /*Product by id ends*/
+
+$categoryId = 42; // fetching products in category id 6
+$categoryProducts = $block->getCategoryProducts($categoryId);
+ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $store = $storeManager->getStore();
+    $mediaUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+   // echo $mediaUrl;
+    $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+    
+foreach ($categoryProducts as $product) {
+    //print_r($product->getData());
+    // printing category name and url
+    // echo $product->getEntityId() . '<br />';
+    //echo $product->getName().'<br />';
+    $urls = $product->getProductUrl();
+    
+    $img = $product->getImage();
+    $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $img;
+   // echo $imageUrl;
+    ?>
+   <a href="<?php echo $urls; ?>"><img src="<?php echo $imageUrl; ?>" width=200px height=200px /><br>
+    <?php
+    echo $product->getName().'<br /></a>';
+    echo $product->getPrice() . '<br />';
+    ?>
+    <form action="<?php echo $block->getUrl('excellence/hello/buynow')?>" method="post">
+    	<input type="submit" value="Buy Now" style=" height: 36px; width: 128px; color: white; background: #1081d8; border: 0px; font-size: 16px;">
+    </form>
+    <?php
+}
+
+
+   
