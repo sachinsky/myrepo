@@ -150,6 +150,7 @@ return array (
     'Prashant_Priceslider' => 1,
     'Prince_Buynow' => 1,
     'SY_Callback' => 1,
+    'Sebwite_SmartSearch' => 1,
     'Shopial_Facebook' => 0,
     'Solwin_Soldout' => 1,
     'Tatvic_EnhancedEcommerce' => 1,
