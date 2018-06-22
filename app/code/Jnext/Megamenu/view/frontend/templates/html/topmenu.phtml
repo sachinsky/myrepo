@@ -1,0 +1,47 @@
+<?php
+/**
+ * Top menu for store
+ *
+ * @var $block \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+<?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+<?php $_menu2 = $block->getHtml2('level-top', 'submenu', $columnsLimit) ?>
+<?php if ($block->allowExtension()): ?>
+    <?php
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();    
+        $helper = $objectManager->get('Jnext\Megamenu\Helper\Data');
+        $catLabel1Bgcolor = $helper->getCatLabel1Bgolor();
+        $catLabel2Bgcolor = $helper->getCatLabel2Bgolor();
+        $catLabel3Bgcolor = $helper->getCatLabel3Bgolor();
+        $catLabel4Bgcolor = $helper->getCatLabel4Bgolor();
+    ?>
+    <style type="text/css">
+        .megamenu .category_label1 .cat-label:before {border-top-color: <?=$catLabel1Bgcolor?>; }
+        .megamenu .category_label1 .cat-label {background: <?=$catLabel1Bgcolor?> none repeat scroll 0 0; }
+        .megamenu .category_label2 .cat-label:before {border-top-color: <?=$catLabel2Bgcolor?>; }
+        .megamenu .category_label2 .cat-label {background: <?=$catLabel2Bgcolor?> none repeat scroll 0 0; }
+        .megamenu .category_label3 .cat-label:before {border-top-color: <?=$catLabel3Bgcolor?>; }
+        .megamenu .category_label3 .cat-label {background: <?=$catLabel3Bgcolor?> none repeat scroll 0 0; }
+        .megamenu .category_label4 .cat-label:before {border-top-color: <?=$catLabel4Bgcolor?>; }
+        .megamenu .category_label4 .cat-label {background: <?=$catLabel4Bgcolor?> none repeat scroll 0 0; }
+    </style>
+	<nav class="navigation" data-action="navigation">
+	    <div class="megamenu">
+		    <?php /* @escapeNotVerified */ echo $_menu2; ?>
+	        <?php /* @escapeNotVerified */ echo $block->getChildHtml(); ?>
+		</div>
+	    <ul id="dm" data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+	        <?php /* @escapeNotVerified */ echo $_menu; ?>
+	        <?php /* @escapeNotVerified */ echo $block->getChildHtml(); ?>
+	    </ul>
+	</nav>
+<?php else: ?>
+	<nav class="navigation" data-action="navigation">
+	    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+	        <?php /* @escapeNotVerified */ echo $_menu; ?>
+	        <?php /* @escapeNotVerified */ echo $block->getChildHtml(); ?>
+	    </ul>
+	</nav>
+<?php endif; ?>

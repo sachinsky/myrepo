@@ -11,6 +11,7 @@ return array (
     'Embitel_Testimonial' => 0,
     'Excellence_Hello' => 1,
     'Indglobal_Enquiry' => 1,
+    'Jnext_Megamenu' => 0,
     'Magento_Directory' => 1,
     'Magento_AdvancedPricingImportExport' => 1,
     'Magento_Config' => 1,
