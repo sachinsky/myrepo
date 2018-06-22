@@ -3,6 +3,7 @@ return array (
   'modules' => 
   array (
     'Clarion_CustomerAttribute' => 1,
+    'Credevlabz_DirectoryIndianStates' => 1,
     'Magento_Store' => 1,
     'Embitel_Bannerslide' => 1,
     'Embitel_Message' => 1,

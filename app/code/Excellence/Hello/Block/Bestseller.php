@@ -34,6 +34,7 @@ product by id and sku
         array $data = []
     )
     {    
+    	
         $this->_categoryFactory = $categoryFactory;
         parent::__construct($context, $data);
     }
@@ -51,4 +52,18 @@ product by id and sku
         $products->addAttributeToSelect('*');
         return $products;
     }
+
+    public function getSlideBanner() 
+    {
+        
+     echo "Hello @ 123";
+    }
+
+    public function getMostViewedData()
+
+    {
+     
+     echo "asfsafasfasf";
+    
+   }
 }

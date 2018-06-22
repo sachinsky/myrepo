@@ -10,7 +10,7 @@
             </block>
         </referenceBlock>
         <!-- to remove title from pages -->
-           <referenceBlock name="page.main.title" remove="true" />
+         <!--   <referenceBlock name="page.main.title" remove="true" /> -->
            <!-- to remove title from pages -->
              <!-- top link -->
      <referenceBlock name="header.links">           
