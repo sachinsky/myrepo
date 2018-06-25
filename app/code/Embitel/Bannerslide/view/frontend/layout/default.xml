@@ -29,6 +29,7 @@
                 </arguments>
                 </block>
             </referenceBlock>
+ <referenceBlock name="form.subscribe" remove="true" />
             
 <!-- <referenceBlock name="catalog.topnav">        
     <block class="Magento\Framework\View\Element\Html\Link\Current" name="cart" before="account">

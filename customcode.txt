@@ -1,0 +1,2 @@
+<p>{{block class="Magento\Framework\View\Element\Template" template="Excellence_Hello::sachin.phtml"}}</p>
+<p>{{block class="Magento\Framework\View\Element\Template" name="test_file" template="Magento_Theme::html/copyright.phtml"}}</p>
